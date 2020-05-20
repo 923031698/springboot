@@ -1,5 +1,7 @@
 package com.bjpowernode.springboot.controller;
 
+import com.bjpowernode.springboot.common.utils.ResponseUtils;
+import com.bjpowernode.springboot.model.common.Response;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -16,9 +18,10 @@ public class ExceptionController {
      * @return
      */
     @RequestMapping("/boot/hello")
-    public @ResponseBody String hello() {
+    public @ResponseBody
+    Response hello() {
         int a = 10 / 0;
-        return "hello, spring boot.";
+        return ResponseUtils.success();
     }
 
     /**
@@ -27,7 +30,8 @@ public class ExceptionController {
      * @return
      */
     @RequestMapping("/boot/hello2")
-    public @ResponseBody String hello2() throws FileNotFoundException {
+    public @ResponseBody
+    String hello2() throws FileNotFoundException {
 
         FileInputStream is = new FileInputStream("");
 

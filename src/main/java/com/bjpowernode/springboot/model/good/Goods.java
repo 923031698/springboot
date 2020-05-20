@@ -1,4 +1,4 @@
-package com.bjpowernode.springboot.model;
+package com.bjpowernode.springboot.model.good;
 
 import java.math.BigDecimal;
 

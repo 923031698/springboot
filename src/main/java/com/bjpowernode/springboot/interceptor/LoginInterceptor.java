@@ -1,7 +1,7 @@
 package com.bjpowernode.springboot.interceptor;
 
 import com.bjpowernode.springboot.constants.Constant;
-import com.bjpowernode.springboot.model.Users;
+import com.bjpowernode.springboot.model.user.Users;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;

@@ -1,12 +1,12 @@
 package com.bjpowernode.springboot.service;
 
-import com.bjpowernode.springboot.model.ResultObject;
+import com.bjpowernode.springboot.model.common.Response;
 
 public interface UsersService {
 
-    public ResultObject register(String phone, String password);
+    public Response register(String phone, String password);
 
-    public ResultObject login(String phone, String password);
+    public Response login(String phone, String password);
 
     public void show();
 }

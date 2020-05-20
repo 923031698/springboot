@@ -1,9 +1,9 @@
 package com.bjpowernode.springboot.controller;
 
 import com.bjpowernode.springboot.constants.Constant;
-import com.bjpowernode.springboot.model.Goods;
-import com.bjpowernode.springboot.model.ResultObject;
-import com.bjpowernode.springboot.model.Users;
+import com.bjpowernode.springboot.model.good.Goods;
+import com.bjpowernode.springboot.model.common.Response;
+import com.bjpowernode.springboot.model.user.Users;
 import com.bjpowernode.springboot.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -53,14 +53,15 @@ public class GoodsController {
      * @return
      */
     @RequestMapping("/boot/order")
-    public @ResponseBody String order(HttpServletRequest request,
-                                      @RequestParam("goodsId") Integer goodsId,
-                                      @RequestParam("buyNum") Integer buyNum) {
+    public @ResponseBody
+    String order(HttpServletRequest request,
+                 @RequestParam("goodsId") Integer goodsId,
+                 @RequestParam("buyNum") Integer buyNum) {
 
-        Users users = (Users)request.getSession().getAttribute(Constant.LOGIN_USER);
+        Users users = (Users) request.getSession().getAttribute(Constant.LOGIN_USER);
 
-        ResultObject resultObject = goodsService.doOrder(users.getId(), goodsId, buyNum);
+        Response response = goodsService.doOrder(users.getId(), goodsId, buyNum);
 
-        return "<script>window.parent.orderOK('"+resultObject.getStatusCode()+"')</script>";
+        return "<script>window.parent.orderOK('" + response.getCode() + "')</script>";
     }
 }

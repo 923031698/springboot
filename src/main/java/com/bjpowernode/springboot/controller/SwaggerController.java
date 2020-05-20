@@ -1,6 +1,6 @@
 package com.bjpowernode.springboot.controller;
 
-import com.bjpowernode.springboot.model.Users;
+import com.bjpowernode.springboot.model.user.Users;
 import io.swagger.annotations.*;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -1,4 +1,4 @@
-package com.bjpowernode.springboot.model;
+package com.bjpowernode.springboot.model.order;
 
 import java.math.BigDecimal;
 import java.util.Date;

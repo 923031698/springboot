@@ -1,6 +1,6 @@
 package com.bjpowernode.springboot.mapper.users;
 
-import com.bjpowernode.springboot.model.Users;
+import com.bjpowernode.springboot.model.user.Users;
 import org.apache.ibatis.annotations.Param;
 
 //@Mapper //标记为mybatis的mapper接口

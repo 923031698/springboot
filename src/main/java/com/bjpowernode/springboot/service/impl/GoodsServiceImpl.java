@@ -3,9 +3,9 @@ package com.bjpowernode.springboot.service.impl;
 import com.bjpowernode.springboot.constants.Constant;
 import com.bjpowernode.springboot.mapper.goods.GoodsMapper;
 import com.bjpowernode.springboot.mapper.orders.OrdersMapper;
-import com.bjpowernode.springboot.model.Goods;
-import com.bjpowernode.springboot.model.Orders;
-import com.bjpowernode.springboot.model.ResultObject;
+import com.bjpowernode.springboot.model.good.Goods;
+import com.bjpowernode.springboot.model.order.Orders;
+import com.bjpowernode.springboot.model.common.Response;
 import com.bjpowernode.springboot.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,7 +40,7 @@ public class GoodsServiceImpl implements GoodsService {
      * @return
      */
     @Transactional
-    public ResultObject doOrder(Integer uid, Integer goodsId, Integer buyNum) {
+    public Response doOrder(Integer uid, Integer goodsId, Integer buyNum) {
         //减库存 (操作商品库)
         goodsMapper.updateByStore(goodsId, buyNum);
         //下订单
@@ -53,6 +53,6 @@ public class GoodsServiceImpl implements GoodsService {
         ordersMapper.insertSelective(orders);
         //发生异常，测试是否回滚
         int i = 10 / 0;
-        return new ResultObject(Constant.ZERO, "下单成功", orders);
+        return new Response(Constant.ZERO, "下单成功", orders);
     }
 }

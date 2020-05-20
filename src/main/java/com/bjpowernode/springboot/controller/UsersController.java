@@ -1,7 +1,7 @@
 package com.bjpowernode.springboot.controller;
 
 import com.bjpowernode.springboot.constants.Constant;
-import com.bjpowernode.springboot.model.ResultObject;
+import com.bjpowernode.springboot.model.common.Response;
 import com.bjpowernode.springboot.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,14 +19,15 @@ public class UsersController {
     private UsersService usersService;
 
     @RequestMapping("/boot/register")
-    public @ResponseBody String register(HttpSession session,
+    public @ResponseBody
+    String register(HttpSession session,
                     @RequestParam("phone") String phone,
                     @RequestParam("password") String password) {
 
-        ResultObject resultObject = usersService.register(phone, password);
+        Response response = usersService.register(phone, password);
 
-        if (resultObject.getStatusCode() == 0) {
-            session.setAttribute(Constant.LOGIN_USER, resultObject.getData());
+        if (response.getCode() == 0) {
+            session.setAttribute(Constant.LOGIN_USER, response.getData());
 
             return "<script>window.parent.uploadOK('OK')</script>";
         }
@@ -34,14 +35,15 @@ public class UsersController {
     }
 
     @RequestMapping("/boot/login")
-    public @ResponseBody String login(HttpSession session,
-                                      @RequestParam("phone") String phone,
-                                      @RequestParam("password") String password) {
+    public @ResponseBody
+    String login(HttpSession session,
+                 @RequestParam("phone") String phone,
+                 @RequestParam("password") String password) {
 
-        ResultObject resultObject = usersService.login(phone, password);
+        Response response = usersService.login(phone, password);
 
-        if (resultObject.getStatusCode() == 0) {
-            session.setAttribute(Constant.LOGIN_USER, resultObject.getData());
+        if (response.getCode() == 0) {
+            session.setAttribute(Constant.LOGIN_USER, response.getData());
 
             return "<script>window.parent.uploadOK('OK')</script>";
         }

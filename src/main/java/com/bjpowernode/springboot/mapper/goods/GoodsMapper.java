@@ -1,6 +1,6 @@
 package com.bjpowernode.springboot.mapper.goods;
 
-import com.bjpowernode.springboot.model.Goods;
+import com.bjpowernode.springboot.model.good.Goods;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

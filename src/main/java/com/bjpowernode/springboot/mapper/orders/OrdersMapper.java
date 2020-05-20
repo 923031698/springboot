@@ -1,6 +1,6 @@
 package com.bjpowernode.springboot.mapper.orders;
 
-import com.bjpowernode.springboot.model.Orders;
+import com.bjpowernode.springboot.model.order.Orders;
 
 public interface OrdersMapper {
 

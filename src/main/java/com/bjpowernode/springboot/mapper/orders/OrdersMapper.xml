@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bjpowernode.springboot.mapper.orders.OrdersMapper">
-  <resultMap id="BaseResultMap" type="com.bjpowernode.springboot.model.Orders">
+  <resultMap id="BaseResultMap" type="com.bjpowernode.springboot.model.order.Orders">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="uid" jdbcType="INTEGER" property="uid" />
     <result column="goodsId" jdbcType="INTEGER" property="goodsid" />
@@ -24,7 +24,7 @@
     delete from orders
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.bjpowernode.springboot.model.Orders">
+  <insert id="insert" parameterType="com.bjpowernode.springboot.model.order.Orders">
     insert into orders (id, uid, goodsId, 
       buyNum, buyPrice, orderMoney, 
       createTime, status)
@@ -32,7 +32,7 @@
       #{buynum,jdbcType=INTEGER}, #{buyprice,jdbcType=DECIMAL}, #{ordermoney,jdbcType=DECIMAL}, 
       #{createtime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.bjpowernode.springboot.model.Orders">
+  <insert id="insertSelective" parameterType="com.bjpowernode.springboot.model.order.Orders">
     insert into orders
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -87,7 +87,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.bjpowernode.springboot.model.Orders">
+  <update id="updateByPrimaryKeySelective" parameterType="com.bjpowernode.springboot.model.order.Orders">
     update orders
     <set>
       <if test="uid != null">
@@ -114,7 +114,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.bjpowernode.springboot.model.Orders">
+  <update id="updateByPrimaryKey" parameterType="com.bjpowernode.springboot.model.order.Orders">
     update orders
     set uid = #{uid,jdbcType=INTEGER},
       goodsId = #{goodsid,jdbcType=INTEGER},
