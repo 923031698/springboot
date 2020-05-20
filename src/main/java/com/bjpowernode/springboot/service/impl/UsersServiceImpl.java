@@ -1,6 +1,9 @@
 package com.bjpowernode.springboot.service.impl;
 
+import com.bjpowernode.springboot.common.enums.ErrorTypeEnum;
+import com.bjpowernode.springboot.common.utils.ResponseUtils;
 import com.bjpowernode.springboot.constants.Constant;
+import com.bjpowernode.springboot.handler.exception.CustomException;
 import com.bjpowernode.springboot.mapper.users.UsersMapper;
 import com.bjpowernode.springboot.model.common.Response;
 import com.bjpowernode.springboot.model.user.Users;
@@ -26,20 +29,18 @@ public class UsersServiceImpl implements UsersService {
         users.setPhone(phone);
         users.setPassword(password);
         int insert = usersMapper.insertSelective(users);
-        if (insert > 0) {
-            return new Response(Constant.ZERO, "注册成功", users);
-        } else {
-            return new Response(Constant.ONE, "注册失败");
+        if (insert == 0) {
+            throw new CustomException(ErrorTypeEnum.ADD_FAILURE);
         }
+        return ResponseUtils.success();
     }
 
     public Response login(String phone, String password) {
         Users users = usersMapper.login(phone, password);
-        if (users != null) {
-            return new Response(Constant.ZERO, "登录成功", users);
-        } else {
-            return new Response(Constant.ONE, "账号或密码不匹配");
+        if (users == null) {
+            throw new CustomException(ErrorTypeEnum.QUERY_FAILURE);
         }
+        return ResponseUtils.success();
     }
 
     public void show() {

@@ -1,18 +1,25 @@
 package com.bjpowernode.springboot.common.enums;
 
 /**
- * 自定义异常枚举
+ * @Author bjb
+ * @Description 自定义枚举异常
+ * @Date 2020/5/20 20:48
  */
 public enum ErrorTypeEnum {
 
     /**
-     * 错误类型
+     * 统一成功返回
      */
-    OBJECT_NOT_FOUND(0, "对象不存在"),
+    OPERATION_SUCCESS(2000, "操作成功"),
 
-    INVALID_PARAMS(1, "参数不正确"),
+    OPERATION_FAILURE(3000, "操作失败"),
 
-    RESULT_NOT_EXIST(2, "记录不存在");
+    //CRUD操作失败
+    ADD_FAILURE(3001, "添加失败"),
+    QUERY_FAILURE(3002, "查询失败"),
+    DELETE_FAILURE(3003, "删除失败"),
+    UPDATE_FAILURE(3004, "修改失败");
+    ;
 
     /**
      * 错误码

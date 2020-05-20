@@ -2,15 +2,36 @@ package com.bjpowernode.springboot.controller;
 
 import com.bjpowernode.springboot.common.utils.ResponseUtils;
 import com.bjpowernode.springboot.model.common.Response;
+import com.bjpowernode.springboot.service.RedisService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 
-@Controller
+@RestController
 public class ExceptionController {
+
+    @Autowired
+    RedisService redisService;
+
+
+    /**
+     * 抛出 RuntimeException 异常
+     *
+     * @return
+     */
+    @RequestMapping("/boot/redis")
+    public Response redis() {
+        redisService.cache();
+        return ResponseUtils.success();
+    }
+
 
     /**
      * 抛出 RuntimeException 异常
@@ -18,10 +39,12 @@ public class ExceptionController {
      * @return
      */
     @RequestMapping("/boot/hello")
-    public @ResponseBody
-    Response hello() {
-        int a = 10 / 0;
-        return ResponseUtils.success();
+    public Response hello() {
+
+        List<String> list = new ArrayList<>();
+        list.add("1");
+        list.add("2");
+        return ResponseUtils.success(list);
     }
 
     /**
@@ -30,8 +53,7 @@ public class ExceptionController {
      * @return
      */
     @RequestMapping("/boot/hello2")
-    public @ResponseBody
-    String hello2() throws FileNotFoundException {
+    public String hello2() throws FileNotFoundException {
 
         FileInputStream is = new FileInputStream("");
 

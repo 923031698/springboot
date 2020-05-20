@@ -1,5 +1,6 @@
 package com.bjpowernode.springboot.service.impl;
 
+import com.bjpowernode.springboot.common.utils.ResponseUtils;
 import com.bjpowernode.springboot.constants.Constant;
 import com.bjpowernode.springboot.mapper.goods.GoodsMapper;
 import com.bjpowernode.springboot.mapper.orders.OrdersMapper;
@@ -53,6 +54,6 @@ public class GoodsServiceImpl implements GoodsService {
         ordersMapper.insertSelective(orders);
         //发生异常，测试是否回滚
         int i = 10 / 0;
-        return new Response(Constant.ZERO, "下单成功", orders);
+        return ResponseUtils.success();
     }
 }
