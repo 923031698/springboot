@@ -33,3 +33,4 @@ mvnw
 mvnw.cmd
 .idea
 .mvn
+.lck
