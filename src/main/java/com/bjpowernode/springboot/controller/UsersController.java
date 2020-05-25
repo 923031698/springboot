@@ -42,7 +42,7 @@ public class UsersController {
 
         Response response = usersService.login(phone, password);
 
-        if (response.getCode() == 0) {
+        if (response.getCode() == 200) {
             session.setAttribute(Constant.LOGIN_USER, response.getData());
 
             return "<script>window.parent.uploadOK('OK')</script>";

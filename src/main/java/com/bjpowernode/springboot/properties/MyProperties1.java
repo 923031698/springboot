@@ -3,6 +3,9 @@ package com.bjpowernode.springboot.properties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+/**
+ * 设置配置文件属性
+ */
 @Component
 @ConfigurationProperties(prefix = "jgs.cat")
 public class MyProperties1 {

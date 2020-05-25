@@ -1,0 +1,42 @@
+server:
+  port: 8080
+  servlet:
+    context-path:
+
+
+spring:
+  mvc:
+    view:
+      prefix: /
+      suffix: .jsp
+
+  datasource:
+    userdb:
+      username: root
+      password: 123456
+      driverClassName: com.mysql.cj.jdbc.Driver
+      jdbcUrl: jdbc:mysql://192.168.1.204:3306/userdb?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8&useSSL=false
+
+    goodsdb:
+      username: root
+      password: 123456
+      driverClassName: com.mysql.cj.jdbc.Driver
+      jdbcUrl: jdbc:mysql://192.168.1.204:3306/goodsdb?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8&useSSL=false
+
+    orderdb:
+      username: root
+      password: 123456
+      driverClassName: com.mysql.cj.jdbc.Driver
+      jdbcUrl: jdbc:mysql://192.168.1.204:3306/orderdb?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8&useSSL=false
+
+  redis:
+    host: 120.26.69.124
+    port: 6379
+    password:
+
+jgs:
+  cat:
+    name: cat
+    phone: 13700000000
+    email: cat@163.com
+    address: beijing
