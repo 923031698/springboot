@@ -21,16 +21,7 @@ public class ExceptionController {
     RedisService redisService;
 
 
-    /**
-     * 抛出 RuntimeException 异常
-     *
-     * @return
-     */
-    @RequestMapping("/boot/redis")
-    public Response redis() {
-        redisService.cache();
-        return ResponseUtils.success();
-    }
+
 
 
     /**

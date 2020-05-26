@@ -1,27 +1,22 @@
 package com.bjpowernode.springboot.model.user;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 
-@ApiModel(value = "Users对象", description = "这个一个用户对象")
-public class Users {
 
-    @ApiModelProperty(value = "用户ID")
+import java.io.Serializable;
+
+public class Users  implements Serializable {
+
+    private static final long serialVersionUID = -3691556073652514317L;
     private Integer id;
 
-    @ApiModelProperty(value = "用户ID")
     private String nick;
 
-    @ApiModelProperty(value = "用户手机")
     private String phone;
 
-    @ApiModelProperty(value = "用户密码")
     private String password;
 
-    @ApiModelProperty(value = "用户邮箱")
     private String email;
 
-    @ApiModelProperty(value = "用户账号")
     private String account;
 
     public Integer getId() {
