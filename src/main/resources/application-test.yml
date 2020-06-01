@@ -9,6 +9,14 @@ spring:
     view:
       prefix: /
       suffix: .jsp
+  servlet:
+    multipart:
+      # 启用
+      enabled: true
+      # 上传文件单个限制
+      max-file-size: 5MB
+      # 总限制
+      max-request-size: 6MB
 
   datasource:
     userdb:
