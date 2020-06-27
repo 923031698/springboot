@@ -33,7 +33,13 @@ spring:
     host: 120.26.69.124
     port: 6379
     password:
-
+  elasticsearch:
+    rest:
+      uris: 120.26.69.124:9200
+  data:
+    elasticsearch:
+      repositories:
+        enabled: true
 jgs:
   cat:
     name: cat
