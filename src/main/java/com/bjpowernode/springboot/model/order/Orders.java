@@ -1,8 +1,11 @@
 package com.bjpowernode.springboot.model.order;
 
+import lombok.Data;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
+@Data
 public class Orders {
     private Integer id;
 
@@ -19,68 +22,4 @@ public class Orders {
     private Date createtime;
 
     private Integer status;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getUid() {
-        return uid;
-    }
-
-    public void setUid(Integer uid) {
-        this.uid = uid;
-    }
-
-    public Integer getGoodsid() {
-        return goodsid;
-    }
-
-    public void setGoodsid(Integer goodsid) {
-        this.goodsid = goodsid;
-    }
-
-    public Integer getBuynum() {
-        return buynum;
-    }
-
-    public void setBuynum(Integer buynum) {
-        this.buynum = buynum;
-    }
-
-    public BigDecimal getBuyprice() {
-        return buyprice;
-    }
-
-    public void setBuyprice(BigDecimal buyprice) {
-        this.buyprice = buyprice;
-    }
-
-    public Long getOrdermoney() {
-        return ordermoney;
-    }
-
-    public void setOrdermoney(Long ordermoney) {
-        this.ordermoney = ordermoney;
-    }
-
-    public Date getCreatetime() {
-        return createtime;
-    }
-
-    public void setCreatetime(Date createtime) {
-        this.createtime = createtime;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
 }
