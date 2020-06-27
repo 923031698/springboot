@@ -88,11 +88,12 @@ public class StudentServiceImpl implements StudentService {
      */
     public Iterable<Student> findAll( ) {
         System.out.println("12312312321");
+
         //查询所有
         Iterable<Student> list = studentRepository.findAll();
-        Iterable<Student> ageList = studentRepository.findAll(Sort.by(Sort.Order.desc("age")));
-        Page<Student> pageList = studentRepository.findAll(PageRequest.of(0, 10));
-        List<String> idList = new ArrayList<>();
+//        Iterable<Student> ageList = studentRepository.findAll(Sort.by(Sort.Order.desc("age")));
+//        Page<Student> pageList = studentRepository.findAll(PageRequest.of(0, 10));
+//        List<String> idList = new ArrayList<>();
        // Iterable<Student> allById = studentRepository.findAllById(idList);
         return list;
     }
