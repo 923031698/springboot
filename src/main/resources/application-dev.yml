@@ -40,6 +40,14 @@ spring:
     host: 120.26.69.124
     port: 6379
     password:
+
+  rabbitmq:
+    host: 120.26.69.124
+    port: 5672
+    username: admin
+    password: admin
+    virtual-host: /
+
   elasticsearch:
     rest:
       uris: 120.26.69.124:9200
