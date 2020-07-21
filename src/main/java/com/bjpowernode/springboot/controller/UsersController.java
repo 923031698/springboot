@@ -1,6 +1,5 @@
 package com.bjpowernode.springboot.controller;
 
-import com.bjpowernode.springboot.constants.Constant;
 import com.bjpowernode.springboot.model.common.Response;
 import com.bjpowernode.springboot.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
