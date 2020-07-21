@@ -13,7 +13,6 @@ import java.util.List;
  * @Author: bjb
  * @Description: //TODO
  * @Date: 2020-06-27 14:43:25
- * @Company: 乐木几网络科技有限公司
  */
 @RestController
 public class StudentController {

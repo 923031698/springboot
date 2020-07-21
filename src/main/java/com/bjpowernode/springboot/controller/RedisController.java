@@ -16,7 +16,6 @@ import java.util.concurrent.TimeUnit;
  * @Author: bjb
  * @Description: //TODO
  * @Date: 2020-05-26 20:56:23
- * @Company: 乐木几网络科技有限公司
  */
 @RestController
 public class RedisController {

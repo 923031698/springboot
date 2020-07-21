@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
  * @Author: bjb
  * @Description: 定义rabbitMQ
  * @Date: 2020-07-05 13:40:17
- * @Company: 乐木几网络科技有限公司
  */
 @Configuration
 public class AmqpConfig {
