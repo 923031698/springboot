@@ -26,7 +26,7 @@ public class UsersController {
         Response response = usersService.register(phone, password);
 
         if (response.getCode() == 0) {
-            session.setAttribute(Constant.LOGIN_USER, response.getData());
+        //    session.setAttribute(Constant.LOGIN_USER, response.getData());
 
             return "<script>window.parent.uploadOK('OK')</script>";
         }
@@ -42,7 +42,7 @@ public class UsersController {
         Response response = usersService.login(phone, password);
 
         if (response.getCode() == 200) {
-            session.setAttribute(Constant.LOGIN_USER, response.getData());
+        //    session.setAttribute(Constant.LOGIN_USER, response.getData());
 
             return "<script>window.parent.uploadOK('OK')</script>";
         }
@@ -51,7 +51,7 @@ public class UsersController {
 
     @RequestMapping("/boot/logout")
     public String toUpload(HttpServletRequest request) {
-        request.getSession().removeAttribute(Constant.LOGIN_USER);
+     //   request.getSession().removeAttribute(Constant.LOGIN_USER);
         return "redirect:/";
     }
 }
