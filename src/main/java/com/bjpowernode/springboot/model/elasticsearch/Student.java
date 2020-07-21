@@ -1,7 +1,5 @@
 package com.bjpowernode.springboot.model.elasticsearch;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;

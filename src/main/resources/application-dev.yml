@@ -22,19 +22,19 @@ spring:
       username: root
       password: 123456
       driverClassName: com.mysql.cj.jdbc.Driver
-      jdbcUrl: jdbc:mysql://192.168.1.204:3306/userdb?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8&useSSL=false
+      jdbcUrl: jdbc:mysql://localhost:3306/userdb?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8&useSSL=false
 
     goodsdb:
       username: root
       password: 123456
       driverClassName: com.mysql.cj.jdbc.Driver
-      jdbcUrl: jdbc:mysql://192.168.1.204:3306/goodsdb?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8&useSSL=false
+      jdbcUrl: jdbc:mysql://localhost:3306/goodsdb?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8&useSSL=false
 
     orderdb:
       username: root
       password: 123456
       driverClassName: com.mysql.cj.jdbc.Driver
-      jdbcUrl: jdbc:mysql://192.168.1.204:3306/orderdb?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8&useSSL=false
+      jdbcUrl: jdbc:mysql://localhost:3306/orderdb?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8&useSSL=false
 
   redis:
     host: 120.26.69.124
