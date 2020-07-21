@@ -4,7 +4,7 @@ import com.bjpowernode.springboot.common.utils.ResponseUtils;
 import com.bjpowernode.springboot.config.AmqpConfig;
 import com.bjpowernode.springboot.consumer.DirectConsumer;
 import com.bjpowernode.springboot.message.MessageProducer;
-import com.bjpowernode.springboot.model.common.Response;
+import com.bjpowernode.springboot.common.utils.Response;
 import com.bjpowernode.springboot.model.elasticsearch.Student;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.amqp.core.AmqpTemplate;

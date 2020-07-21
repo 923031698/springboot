@@ -4,7 +4,7 @@ import com.bjpowernode.springboot.common.enums.ErrorTypeEnum;
 import com.bjpowernode.springboot.common.utils.ResponseUtils;
 import com.bjpowernode.springboot.handler.exception.CustomException;
 import com.bjpowernode.springboot.mapper.users.UsersMapper;
-import com.bjpowernode.springboot.model.common.Response;
+import com.bjpowernode.springboot.common.utils.Response;
 import com.bjpowernode.springboot.model.user.Users;
 import com.bjpowernode.springboot.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;

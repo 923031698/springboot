@@ -1,7 +1,5 @@
 package com.bjpowernode.springboot.common.utils;
 
-import com.bjpowernode.springboot.model.common.Response;
-
 /**
  * 接口返回数据类
  */

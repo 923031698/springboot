@@ -1,7 +1,7 @@
 package com.bjpowernode.springboot.service.impl;
 
 import com.bjpowernode.springboot.common.utils.ResponseUtils;
-import com.bjpowernode.springboot.model.common.Response;
+import com.bjpowernode.springboot.common.utils.Response;
 import com.bjpowernode.springboot.model.elasticsearch.Course;
 import com.bjpowernode.springboot.repository.CourseRepository;
 import com.bjpowernode.springboot.service.CourseService;

@@ -1,7 +1,7 @@
 package com.bjpowernode.springboot.controller;
 
 import com.bjpowernode.springboot.common.utils.ResponseUtils;
-import com.bjpowernode.springboot.model.common.Response;
+import com.bjpowernode.springboot.common.utils.Response;
 import com.bjpowernode.springboot.model.user.Users;
 import com.bjpowernode.springboot.service.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;

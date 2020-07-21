@@ -1,4 +1,4 @@
-package com.bjpowernode.springboot.model.common;
+package com.bjpowernode.springboot.common.utils;
 
 
 import com.alibaba.fastjson.JSON;

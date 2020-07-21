@@ -5,7 +5,7 @@ import com.bjpowernode.springboot.mapper.goods.GoodsMapper;
 import com.bjpowernode.springboot.mapper.orders.OrdersMapper;
 import com.bjpowernode.springboot.model.good.Goods;
 import com.bjpowernode.springboot.model.order.Orders;
-import com.bjpowernode.springboot.model.common.Response;
+import com.bjpowernode.springboot.common.utils.Response;
 import com.bjpowernode.springboot.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

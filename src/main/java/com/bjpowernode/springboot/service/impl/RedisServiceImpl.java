@@ -1,6 +1,6 @@
 package com.bjpowernode.springboot.service.impl;
 
-import com.bjpowernode.springboot.model.common.FastJson2JsonRedisSerializer;
+import com.bjpowernode.springboot.common.utils.FastJson2JsonRedisSerializer;
 import com.bjpowernode.springboot.service.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.*;
