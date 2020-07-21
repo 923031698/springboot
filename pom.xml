@@ -115,7 +115,12 @@
             <artifactId>fastjson</artifactId>
             <version>1.2.60</version>
         </dependency>
-
+        <!-- mybatis-plus集成插件 -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <version>3.3.2</version>
+        </dependency>
 
         <!-- spring-boot-starter 自动装配 spring-data-elasticsearch-->
         <!-- springboot整合spring-data-elasticsearch-->

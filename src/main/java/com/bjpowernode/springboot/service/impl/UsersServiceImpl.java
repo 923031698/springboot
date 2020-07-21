@@ -1,5 +1,9 @@
 package com.bjpowernode.springboot.service.impl;
 
+import cn.hutool.core.lang.Dict;
+import cn.hutool.core.map.MapUtil;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.bjpowernode.springboot.common.enums.ErrorTypeEnum;
 import com.bjpowernode.springboot.common.utils.ResponseUtils;
 import com.bjpowernode.springboot.handler.exception.CustomException;
@@ -27,7 +31,7 @@ public class UsersServiceImpl implements UsersService {
         Users users = new Users();
         users.setPhone(phone);
         users.setPassword(password);
-        int insert = usersMapper.insertSelective(users);
+        int insert = usersMapper.insert(users);
         if (insert == 0) {
             throw new CustomException(ErrorTypeEnum.ADD_FAILURE);
         }
@@ -35,7 +39,7 @@ public class UsersServiceImpl implements UsersService {
     }
 
     public Response login(String phone, String password) {
-        Users users = usersMapper.login(phone, password);
+        Users users = usersMapper.selectOne(new QueryWrapper<Users>().eq("phone", phone).eq("password", password));
         if (users == null) {
             throw new CustomException(ErrorTypeEnum.QUERY_FAILURE);
         }
