@@ -47,8 +47,6 @@ public class AmqpConfig {
 
     /**
      * 定义消息转换实例
-     *
-     * @return
      */
     @Bean
     public MessageConverter jackson2JsonMessageConverter() {
