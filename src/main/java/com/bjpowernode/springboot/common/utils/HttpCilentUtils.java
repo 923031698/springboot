@@ -1,4 +1,4 @@
-package com.bjpowernode.springboot.common.httpcilent;
+package com.bjpowernode.springboot.common.utils;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -8,7 +8,7 @@ import java.net.URL;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class HttpUtils {
+public class HttpCilentUtils {
 
 
     public static String http(String url, Map<String, String> params) {

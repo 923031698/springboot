@@ -2,10 +2,9 @@ package com.bjpowernode.springboot.service.impl;
 
 import com.bjpowernode.springboot.common.enums.ErrorTypeEnum;
 import com.bjpowernode.springboot.common.utils.ResponseUtils;
-import com.bjpowernode.springboot.constants.Constant;
 import com.bjpowernode.springboot.handler.exception.CustomException;
 import com.bjpowernode.springboot.mapper.users.UsersMapper;
-import com.bjpowernode.springboot.model.common.Response;
+import com.bjpowernode.springboot.common.utils.Response;
 import com.bjpowernode.springboot.model.user.Users;
 import com.bjpowernode.springboot.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +27,7 @@ public class UsersServiceImpl implements UsersService {
         Users users = new Users();
         users.setPhone(phone);
         users.setPassword(password);
-        int insert = usersMapper.insertSelective(users);
+        int insert = usersMapper.insert(users);
         if (insert == 0) {
             throw new CustomException(ErrorTypeEnum.ADD_FAILURE);
         }
@@ -36,7 +35,10 @@ public class UsersServiceImpl implements UsersService {
     }
 
     public Response login(String phone, String password) {
-        Users users = usersMapper.login(phone, password);
+        Users users1 = new Users();
+        users1.setPhone(phone);
+        users1.setPassword(password);
+        Users users = usersMapper.selectOne(users1);
         if (users == null) {
             throw new CustomException(ErrorTypeEnum.QUERY_FAILURE);
         }
@@ -50,4 +52,23 @@ public class UsersServiceImpl implements UsersService {
 
         System.out.println("userservice show方法执行了.............");
     }
+
+    public  void add(){
+        Users  users =new Users();
+        users.setPassword("123456");
+        users.setPhone("110");
+        users.setAccount("12345");
+        usersMapper.insertSelective(users);
+        System.out.println(users.getId());
+    }
+    public  void update(){
+        Users users = usersMapper.selectByPrimaryKey("5f17af00ef90d443c93e067b");
+        users.setNick("123213");
+        users.setPassword("123456");
+        users.setPhone("110");
+        users.setAccount("12345");
+        usersMapper.updateByPrimaryKeySelective(users);
+    }
+
+
 }

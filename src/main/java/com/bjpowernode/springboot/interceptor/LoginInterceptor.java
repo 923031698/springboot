@@ -1,6 +1,6 @@
 package com.bjpowernode.springboot.interceptor;
 
-import com.bjpowernode.springboot.constants.Constant;
+import com.bjpowernode.springboot.common.utils.ResponseUtils;
 import com.bjpowernode.springboot.model.user.Users;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * 登录拦截器
- *
  */
 public class LoginInterceptor implements HandlerInterceptor {
 
@@ -24,7 +23,7 @@ public class LoginInterceptor implements HandlerInterceptor {
      */
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
-        Users userInfo = (Users)request.getSession().getAttribute(Constant.LOGIN_USER);
+        Users userInfo = (Users) request.getSession().getAttribute("success");
 
         if (userInfo == null) {
             //未登录

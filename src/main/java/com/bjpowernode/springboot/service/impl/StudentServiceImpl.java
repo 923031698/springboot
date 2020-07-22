@@ -1,19 +1,12 @@
 package com.bjpowernode.springboot.service.impl;
 
 import cn.hutool.core.util.IdUtil;
-import com.bjpowernode.springboot.common.utils.ResponseUtils;
-import com.bjpowernode.springboot.model.common.Response;
 import com.bjpowernode.springboot.model.elasticsearch.Student;
 import com.bjpowernode.springboot.repository.StudentRepository;
 import com.bjpowernode.springboot.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,7 +14,6 @@ import java.util.Optional;
  * @Author: bjb
  * @Description: //TODO
  * @Date: 2020-06-27 14:13:50
- * @Company: 乐木几网络科技有限公司
  */
 @Service
 public class StudentServiceImpl implements StudentService {

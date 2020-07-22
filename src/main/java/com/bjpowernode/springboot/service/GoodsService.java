@@ -1,7 +1,7 @@
 package com.bjpowernode.springboot.service;
 
 import com.bjpowernode.springboot.model.good.Goods;
-import com.bjpowernode.springboot.model.common.Response;
+import com.bjpowernode.springboot.common.utils.Response;
 
 import java.util.List;
 

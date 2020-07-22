@@ -20,12 +20,12 @@ public class MessageProducer {
     @Autowired
     private AmqpTemplate amqpTemplate;
 
-    public  void  sendMessage(Object message){
+    public  void  sendMessage(){
         Student student =new Student();
         student.setId("213");
         student.setAge(12);
         amqpTemplate.convertAndSend(AmqpConfig.EXCHANGE, AmqpConfig.ROUTINGKEY,student.toString());
-        log.info("发送消息:"+message);
+        log.info("发送消息:"+student.toString());
     }
 
 }

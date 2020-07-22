@@ -1,6 +1,6 @@
 package com.bjpowernode.springboot.service;
 
-import com.bjpowernode.springboot.model.common.Response;
+import com.bjpowernode.springboot.common.utils.Response;
 
 public interface UsersService {
 
@@ -9,4 +9,8 @@ public interface UsersService {
     public Response login(String phone, String password);
 
     public void show();
+
+    public  void add();
+
+    public  void update();
 }

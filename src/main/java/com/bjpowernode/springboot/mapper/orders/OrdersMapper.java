@@ -1,18 +1,10 @@
 package com.bjpowernode.springboot.mapper.orders;
 
+
 import com.bjpowernode.springboot.model.order.Orders;
+import tk.mybatis.mapper.common.Mapper;
 
-public interface OrdersMapper {
+public interface OrdersMapper   extends Mapper<Orders> {
 
-    int deleteByPrimaryKey(Integer id);
 
-    int insert(Orders record);
-
-    int insertSelective(Orders record);
-
-    Orders selectByPrimaryKey(Integer id);
-
-    int updateByPrimaryKeySelective(Orders record);
-
-    int updateByPrimaryKey(Orders record);
 }

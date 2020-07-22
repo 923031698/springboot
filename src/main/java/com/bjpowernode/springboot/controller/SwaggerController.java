@@ -23,7 +23,6 @@ public class SwaggerController {
     @RequestMapping(value = "/swagger/{id}/{status}",method = RequestMethod.GET)
     public Users getUserInfo(@PathVariable("id") Integer id, @PathVariable("status") Integer status) {
         Users users = new Users();
-        users.setId(id);
         users.setNick("cat");
         users.setPhone("1370000000");
         users.setPassword("******");

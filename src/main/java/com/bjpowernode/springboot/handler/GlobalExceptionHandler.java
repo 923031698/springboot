@@ -2,7 +2,7 @@ package com.bjpowernode.springboot.handler;
 
 import com.bjpowernode.springboot.common.utils.ResponseUtils;
 import com.bjpowernode.springboot.handler.exception.CustomException;
-import com.bjpowernode.springboot.model.common.Response;
+import com.bjpowernode.springboot.common.utils.Response;
 import org.springframework.boot.web.server.ConfigurableWebServerFactory;
 import org.springframework.boot.web.server.ErrorPage;
 import org.springframework.boot.web.server.WebServerFactoryCustomizer;

@@ -1,7 +1,7 @@
 package com.bjpowernode.springboot.controller;
 
-import com.bjpowernode.springboot.constants.Constant;
-import com.bjpowernode.springboot.model.common.Response;
+import com.bjpowernode.springboot.common.utils.Response;
+import com.bjpowernode.springboot.common.utils.ResponseUtils;
 import com.bjpowernode.springboot.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,7 +27,7 @@ public class UsersController {
         Response response = usersService.register(phone, password);
 
         if (response.getCode() == 0) {
-            session.setAttribute(Constant.LOGIN_USER, response.getData());
+            //    session.setAttribute(Constant.LOGIN_USER, response.getData());
 
             return "<script>window.parent.uploadOK('OK')</script>";
         }
@@ -43,7 +43,7 @@ public class UsersController {
         Response response = usersService.login(phone, password);
 
         if (response.getCode() == 200) {
-            session.setAttribute(Constant.LOGIN_USER, response.getData());
+            //    session.setAttribute(Constant.LOGIN_USER, response.getData());
 
             return "<script>window.parent.uploadOK('OK')</script>";
         }
@@ -52,7 +52,20 @@ public class UsersController {
 
     @RequestMapping("/boot/logout")
     public String toUpload(HttpServletRequest request) {
-        request.getSession().removeAttribute(Constant.LOGIN_USER);
+        //   request.getSession().removeAttribute(Constant.LOGIN_USER);
         return "redirect:/";
     }
+
+    @RequestMapping("/boot/add")
+    public Response add() {
+        usersService.add();
+        return ResponseUtils.success();
+    }
+    @RequestMapping("/boot/update")
+    public Response update() {
+        usersService.update();
+        return ResponseUtils.success();
+    }
+
+
 }

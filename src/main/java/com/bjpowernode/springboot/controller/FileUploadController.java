@@ -1,7 +1,7 @@
 package com.bjpowernode.springboot.controller;
 
 import com.bjpowernode.springboot.common.utils.ResponseUtils;
-import com.bjpowernode.springboot.model.common.Response;
+import com.bjpowernode.springboot.common.utils.Response;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;

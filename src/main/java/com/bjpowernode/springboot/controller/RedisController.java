@@ -1,7 +1,7 @@
 package com.bjpowernode.springboot.controller;
 
 import com.bjpowernode.springboot.common.utils.ResponseUtils;
-import com.bjpowernode.springboot.model.common.Response;
+import com.bjpowernode.springboot.common.utils.Response;
 import com.bjpowernode.springboot.model.user.Users;
 import com.bjpowernode.springboot.service.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,6 @@ import java.util.concurrent.TimeUnit;
  * @Author: bjb
  * @Description: //TODO
  * @Date: 2020-05-26 20:56:23
- * @Company: 乐木几网络科技有限公司
  */
 @RestController
 public class RedisController {

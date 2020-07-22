@@ -1,7 +1,7 @@
 package com.bjpowernode.springboot.controller;
 
 import com.bjpowernode.springboot.common.utils.ResponseUtils;
-import com.bjpowernode.springboot.model.common.Response;
+import com.bjpowernode.springboot.common.utils.Response;
 import com.bjpowernode.springboot.model.elasticsearch.Student;
 import com.bjpowernode.springboot.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,6 @@ import java.util.List;
  * @Author: bjb
  * @Description: //TODO
  * @Date: 2020-06-27 14:43:25
- * @Company: 乐木几网络科技有限公司
  */
 @RestController
 public class StudentController {

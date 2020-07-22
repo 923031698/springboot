@@ -1,12 +1,11 @@
 package com.bjpowernode.springboot.service.impl;
 
 import com.bjpowernode.springboot.common.utils.ResponseUtils;
-import com.bjpowernode.springboot.constants.Constant;
 import com.bjpowernode.springboot.mapper.goods.GoodsMapper;
 import com.bjpowernode.springboot.mapper.orders.OrdersMapper;
 import com.bjpowernode.springboot.model.good.Goods;
 import com.bjpowernode.springboot.model.order.Orders;
-import com.bjpowernode.springboot.model.common.Response;
+import com.bjpowernode.springboot.common.utils.Response;
 import com.bjpowernode.springboot.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,14 +17,14 @@ import java.util.List;
 @Service
 public class GoodsServiceImpl implements GoodsService {
 
+
     @Autowired
     private GoodsMapper goodsMapper;
-
     @Autowired
     private OrdersMapper ordersMapper;
 
     public List<Goods> getAllGoods() {
-        return goodsMapper.selectAllGoods();
+        return goodsMapper.selectAll();
     }
 
     public Goods getGoodsById(Integer goodsId) {
@@ -43,7 +42,10 @@ public class GoodsServiceImpl implements GoodsService {
     @Transactional
     public Response doOrder(Integer uid, Integer goodsId, Integer buyNum) {
         //减库存 (操作商品库)
-        goodsMapper.updateByStore(goodsId, buyNum);
+        Goods goods = new Goods();
+        goods.setId(goodsId);
+        goods.setStore(buyNum);
+        goodsMapper.updateByPrimaryKeySelective(goods);
         //下订单
         Orders orders = new Orders();
         orders.setBuynum(buyNum);
