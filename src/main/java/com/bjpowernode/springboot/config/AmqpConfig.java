@@ -1,4 +1,6 @@
 package com.bjpowernode.springboot.config;
+import java.math.BigDecimal;
+import java.util.List;
 
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
@@ -20,6 +22,8 @@ public class AmqpConfig {
     public static final String QUEUE = "springboot.queue";
 
     public static final String ROUTINGKEY = "springboot.routingkey";
+    @org.springframework.beans.factory.annotation.Autowired
+    private com.bjpowernode.springboot.mapper.goods.GoodsMapper goodsMapper;
 
     /**
      * 声明一个直连交换机
@@ -52,6 +56,9 @@ public class AmqpConfig {
     public MessageConverter jackson2JsonMessageConverter() {
         return new Jackson2JsonMessageConverter();
     }
+
+
+
 
 
 }

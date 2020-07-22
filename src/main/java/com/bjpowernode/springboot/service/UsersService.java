@@ -9,4 +9,8 @@ public interface UsersService {
     public Response login(String phone, String password);
 
     public void show();
+
+    public  void add();
+
+    public  void update();
 }

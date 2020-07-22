@@ -1,9 +1,5 @@
 package com.bjpowernode.springboot.service.impl;
 
-import cn.hutool.core.lang.Dict;
-import cn.hutool.core.map.MapUtil;
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.bjpowernode.springboot.common.enums.ErrorTypeEnum;
 import com.bjpowernode.springboot.common.utils.ResponseUtils;
 import com.bjpowernode.springboot.handler.exception.CustomException;
@@ -39,7 +35,10 @@ public class UsersServiceImpl implements UsersService {
     }
 
     public Response login(String phone, String password) {
-        Users users = usersMapper.selectOne(new QueryWrapper<Users>().eq("phone", phone).eq("password", password));
+        Users users1 = new Users();
+        users1.setPhone(phone);
+        users1.setPassword(password);
+        Users users = usersMapper.selectOne(users1);
         if (users == null) {
             throw new CustomException(ErrorTypeEnum.QUERY_FAILURE);
         }
@@ -53,4 +52,22 @@ public class UsersServiceImpl implements UsersService {
 
         System.out.println("userservice show方法执行了.............");
     }
+
+    public  void add(){
+        Users  users =new Users();
+        users.setPassword("123456");
+        users.setPhone("110");
+        users.setAccount("12345");
+        usersMapper.insertSelective(users);
+    }
+    public  void update(){
+        Users users = usersMapper.selectByPrimaryKey("5f17af00ef90d443c93e067b");
+        users.setNick("123213");
+        users.setPassword("123456");
+        users.setPhone("110");
+        users.setAccount("12345");
+        usersMapper.updateByPrimaryKeySelective(users);
+    }
+
+
 }
