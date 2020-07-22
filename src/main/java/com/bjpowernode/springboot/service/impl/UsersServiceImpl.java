@@ -59,6 +59,7 @@ public class UsersServiceImpl implements UsersService {
         users.setPhone("110");
         users.setAccount("12345");
         usersMapper.insertSelective(users);
+        System.out.println(users.getId());
     }
     public  void update(){
         Users users = usersMapper.selectByPrimaryKey("5f17af00ef90d443c93e067b");
