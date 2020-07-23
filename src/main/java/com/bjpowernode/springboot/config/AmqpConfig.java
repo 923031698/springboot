@@ -22,8 +22,6 @@ public class AmqpConfig {
     public static final String QUEUE = "springboot.queue";
 
     public static final String ROUTINGKEY = "springboot.routingkey";
-    @org.springframework.beans.factory.annotation.Autowired
-    private com.bjpowernode.springboot.mapper.goods.GoodsMapper goodsMapper;
 
     /**
      * 声明一个直连交换机

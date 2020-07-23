@@ -40,6 +40,7 @@ spring:
     host: 120.26.69.124
     port: 6379
     password:
+    timeout: 5000
 
   rabbitmq:
     host: 120.26.69.124
