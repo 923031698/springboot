@@ -1,7 +1,6 @@
 package com.bjpowernode.springboot.service.impl;
 
 import com.bjpowernode.springboot.common.enums.ErrorTypeEnum;
-import com.bjpowernode.springboot.common.utils.DistributedGenId;
 import com.bjpowernode.springboot.common.utils.ResponseUtils;
 import com.bjpowernode.springboot.handler.exception.CustomException;
 import com.bjpowernode.springboot.mapper.users.UsersMapper;
