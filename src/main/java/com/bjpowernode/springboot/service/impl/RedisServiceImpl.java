@@ -1,5 +1,8 @@
 package com.bjpowernode.springboot.service.impl;
 
+import cn.hutool.core.date.DatePattern;
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.date.format.DatePrinter;
 import com.bjpowernode.springboot.common.utils.FastJson2JsonRedisSerializer;
 import com.bjpowernode.springboot.service.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -19,7 +23,6 @@ public class RedisServiceImpl implements RedisService {
 
     @Autowired
     private RedisTemplate redisTemplate;
-
 
     /**
      * 初始化之后需要执行的方法  构造方法 > @Autowired > @PostConstruct
@@ -229,6 +232,34 @@ public class RedisServiceImpl implements RedisService {
     public long incr(String key) {
         return redisTemplate.opsForValue().increment(key);
 
+    }
+
+
+    /**
+     * 按key生成每天的自增序列
+     */
+    public String incrSerial(String tag) {
+        String date = DateUtil.format(new Date(), DatePattern.PURE_DATE_PATTERN);
+        String serial = tag + ":" + date;
+        String sequence = getSequence(incr(serial));
+        StringBuilder sb = new StringBuilder();
+        sb.append(date).append(sequence);
+        return tag + sb.toString();
+    }
+
+    public static String getSequence(long seq) {
+        String str = String.valueOf(seq);
+        int len = str.length();
+        if (len >= 5) {// 取决于业务规模,应该不会到达5
+            return str;
+        }
+        int rest = 5 - len;
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < rest; i++) {
+            sb.append('0');
+        }
+        sb.append(str);
+        return sb.toString();
     }
 
 }

@@ -1,11 +1,13 @@
 package com.bjpowernode.springboot.service.impl;
 
 import com.bjpowernode.springboot.common.enums.ErrorTypeEnum;
+import com.bjpowernode.springboot.common.utils.DistributedGenId;
 import com.bjpowernode.springboot.common.utils.ResponseUtils;
 import com.bjpowernode.springboot.handler.exception.CustomException;
 import com.bjpowernode.springboot.mapper.users.UsersMapper;
 import com.bjpowernode.springboot.common.utils.Response;
 import com.bjpowernode.springboot.model.user.Users;
+import com.bjpowernode.springboot.service.RedisService;
 import com.bjpowernode.springboot.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -22,6 +24,8 @@ public class UsersServiceImpl implements UsersService {
      */
     @Autowired
     private RedisTemplate redisTemplate;
+    @Autowired
+    private RedisService redisService;
 
     public Response register(String phone, String password) {
         Users users = new Users();
@@ -53,15 +57,15 @@ public class UsersServiceImpl implements UsersService {
         System.out.println("userservice show方法执行了.............");
     }
 
-    public  void add(){
-        Users  users =new Users();
+    public void add() {
+        Users users = new Users();
         users.setPassword("123456");
         users.setPhone("110");
-        users.setAccount("12345");
+        users.setAccount(redisService.incrSerial("DD"));
         usersMapper.insertSelective(users);
-        System.out.println(users.getId());
     }
-    public  void update(){
+
+    public void update() {
         Users users = usersMapper.selectByPrimaryKey("5f17af00ef90d443c93e067b");
         users.setNick("123213");
         users.setPassword("123456");
