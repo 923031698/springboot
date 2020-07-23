@@ -1,13 +1,13 @@
 package com.bjpowernode.springboot.config;
-import java.math.BigDecimal;
-import java.util.List;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
 
 /**
  * @Author: bjb
@@ -17,11 +17,19 @@ import org.springframework.stereotype.Component;
 @Configuration
 public class AmqpConfig {
 
-    public static final String EXCHANGE = "springboot.exchange";
+    public static final String EXCHANGE = "springboot.exchange";  //直连交换机
 
-    public static final String QUEUE = "springboot.queue";
+    public static final String QUEUE = "springboot.queue";      //直连队列
 
-    public static final String ROUTINGKEY = "springboot.routingkey";
+    public static final String ROUTINGKEY = "springboot.routingkey";  //直连路由
+
+
+    public static final String DEAD_EXCHANGE = "dead.exchange";  //死信交换机
+
+    public static final String DEAD_QUEUE = "dead.queue";       //死信队列
+
+    public static final String DEAD_ROUTINGKEY = "dead.routingkey"; //死信路由
+
 
     /**
      * 声明一个直连交换机
@@ -36,16 +44,45 @@ public class AmqpConfig {
      */
     @Bean
     public Queue queue() {
-        return QueueBuilder.durable(QUEUE).build();
-    }
+        Map<String, Object> params = new HashMap<>();
+        params.put("x-dead-letter-exchange", DEAD_EXCHANGE);
+        params.put("x-dead-letter-routing-key", DEAD_ROUTINGKEY);
+        return new Queue(QUEUE, true, false, false, params);
 
+
+    }
     /**
      * 路由绑定
      */
     @Bean
-    public Binding binding(Queue queue, DirectExchange exchange) {
-        return BindingBuilder.bind(queue).to(exchange).with(ROUTINGKEY);
+    public Binding binding() {
+        return BindingBuilder.bind(queue()).to(exchange()).with(ROUTINGKEY);
     }
+
+    /**
+     * 死信交换机
+     */
+    @Bean
+    public DirectExchange deadExchange() {
+        return ExchangeBuilder.directExchange(DEAD_EXCHANGE).durable(true).build();
+    }
+
+    /**
+     * 死信队列
+     */
+    @Bean
+    public Queue deadQueue() {
+        return QueueBuilder.durable(DEAD_QUEUE).build();
+    }
+
+    /**
+     * 死信路由
+     */
+    @Bean
+    public Binding deadBinding() {
+        return BindingBuilder.bind(deadQueue()).to(deadExchange()).with(DEAD_ROUTINGKEY);
+    }
+
 
     /**
      * 定义消息转换实例
@@ -54,9 +91,6 @@ public class AmqpConfig {
     public MessageConverter jackson2JsonMessageConverter() {
         return new Jackson2JsonMessageConverter();
     }
-
-
-
 
 
 }

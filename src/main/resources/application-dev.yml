@@ -48,6 +48,10 @@ spring:
     username: admin
     password: admin
     virtual-host: /
+    listener:
+      type: simple
+      simple:
+        acknowledge-mode: manual
 
   elasticsearch:
     rest:
