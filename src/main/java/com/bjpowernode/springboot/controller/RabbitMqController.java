@@ -36,7 +36,8 @@ public class RabbitMqController {
         Student student =new Student();
         student.setId("213");
         student.setAge(12);
-        amqpTemplate.convertAndSend(AmqpConfig.EXCHANGE, AmqpConfig.ROUTINGKEY,student);
+        messageProducer.sendMessage(student);
+   //     amqpTemplate.convertAndSend(AmqpConfig.SONG_EXCHANGE, AmqpConfig.ROUTING_KEY,student);
         return ResponseUtils.success();
     }
 
