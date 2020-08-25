@@ -1,11 +1,11 @@
 package com.bjpowernode.springboot.controller;
 
 import com.bjpowernode.springboot.common.utils.ResponseUtils;
-import com.bjpowernode.springboot.config.AmqpConfig;
 import com.bjpowernode.springboot.consumer.DirectConsumer;
 import com.bjpowernode.springboot.message.MessageProducer;
 import com.bjpowernode.springboot.common.utils.Response;
 import com.bjpowernode.springboot.model.elasticsearch.Student;
+import com.bjpowernode.springboot.model.elasticsearch.StudentVo;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.core.Message;
@@ -28,16 +28,14 @@ public class RabbitMqController {
     @Autowired
     DirectConsumer directConsumer;
 
-    @Autowired
-    private AmqpTemplate amqpTemplate;
 
     @RequestMapping("/message")
     public Response message(){
+
         Student student =new Student();
         student.setId("213");
         student.setAge(12);
         messageProducer.sendMessage(student);
-   //     amqpTemplate.convertAndSend(AmqpConfig.SONG_EXCHANGE, AmqpConfig.ROUTING_KEY,student);
         return ResponseUtils.success();
     }
 

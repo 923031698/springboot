@@ -10,7 +10,9 @@ public interface UsersService {
 
     public void show();
 
-    public  void add();
+    public void add();
 
-    public  void update();
+    public void update();
+
+    Response select();
 }

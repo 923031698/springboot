@@ -10,6 +10,8 @@ import com.bjpowernode.springboot.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import tk.mybatis.mapper.weekend.Weekend;
+import tk.mybatis.mapper.weekend.WeekendCriteria;
 
 import java.util.Date;
 import java.util.List;
@@ -58,4 +60,14 @@ public class GoodsServiceImpl implements GoodsService {
         int i = 10 / 0;
         return ResponseUtils.success();
     }
+
+
+  /*  public Response select() {
+       *//* Weekend<Goods> weekend = new Weekend(Goods.class);
+        Goods goods = new Goods();
+        WeekendCriteria weekendCriteria = weekend.weekendCriteria().andEqualTo(Goods::getName,);
+
+
+        goodsMapper.selectByExample(weekend);*//*
+    }*/
 }

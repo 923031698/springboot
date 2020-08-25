@@ -15,11 +15,11 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class CourseServiceImpl  implements CourseService {
-    @Autowired
-    CourseRepository courseRepository;
+   // @Autowired
+   // CourseRepository courseRepository;
 
     public Response insert(Course course){
-        courseRepository.index(course);
+   //     courseRepository.index(course);
         return  ResponseUtils.success(course);
     }
 }

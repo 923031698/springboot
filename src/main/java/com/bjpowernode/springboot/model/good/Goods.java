@@ -15,4 +15,6 @@ public class Goods implements Serializable {
     private BigDecimal price;
 
     private Integer store;
+
+
 }

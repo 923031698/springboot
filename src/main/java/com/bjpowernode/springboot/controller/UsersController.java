@@ -61,11 +61,17 @@ public class UsersController {
         usersService.add();
         return ResponseUtils.success();
     }
+
     @RequestMapping("/boot/update")
     public Response update() {
         usersService.update();
         return ResponseUtils.success();
     }
 
+    @RequestMapping("/boot/select")
+    public Response select() {
+        Response select = usersService.select();
+        return ResponseUtils.success(select);
+    }
 
 }
