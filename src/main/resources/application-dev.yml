@@ -2,3 +2,76 @@ server:
   port: 8080
   servlet:
     context-path:
+
+
+spring:
+  mvc:
+    view:
+      prefix: /
+      suffix: .jsp
+  servlet:
+    multipart:
+      # 启用
+      enabled: true
+      # 上传文件单个限制
+      max-file-size: 5MB
+      # 总限制
+      max-request-size: 6MB
+  datasource:
+    userdb:
+      username: root
+      password: 123456
+      driverClassName: com.mysql.cj.jdbc.Driver
+      jdbcUrl: jdbc:mysql://localhost:3306/userdb?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8&useSSL=false
+
+    goodsdb:
+      username: root
+      password: 123456
+      driverClassName: com.mysql.cj.jdbc.Driver
+      jdbcUrl: jdbc:mysql://localhost:3306/goodsdb?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8&useSSL=false
+
+    orderdb:
+      username: root
+      password: 123456
+      driverClassName: com.mysql.cj.jdbc.Driver
+      jdbcUrl: jdbc:mysql://localhost:3306/orderdb?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8&useSSL=false
+
+  redis:
+    host: 120.26.69.124
+    port: 6379
+    password:
+    timeout: 5000
+
+  rabbitmq:
+    host: 192.168.1.43
+    port: 5672
+    #  username: admin
+    # password: admin
+    virtual-host: /
+    publisher-returns: true
+    publisher-confirms: true
+    listener:
+      simple:
+        retry:
+          # 开启消费者(程序出现异常)重试机制，默认开启并一直重试
+          enabled: true
+          # 最大重试次数
+          max-attempts: 5
+          # 重试间隔时间(毫秒)
+          initial-interval: 3000
+        # 开启手动ack
+        acknowledge-mode: manual
+
+  elasticsearch:
+    rest:
+      uris: 120.26.69.124:9200
+  data:
+    elasticsearch:
+      repositories:
+        enabled: true
+jgs:
+  cat:
+    name: cat
+    phone: 13700000000
+    email: cat@163.com
+    address: beijing

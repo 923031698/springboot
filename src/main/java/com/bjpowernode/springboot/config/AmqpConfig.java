@@ -6,20 +6,21 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.*;
+import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
+import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.boot.autoconfigure.AutoConfigureBefore;
+import org.springframework.boot.autoconfigure.amqp.RabbitAutoConfiguration;
 import org.springframework.boot.autoconfigure.amqp.RabbitProperties;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
-import org.springframework.retry.RetryCallback;
-import org.springframework.retry.RetryContext;
-import org.springframework.retry.RetryListener;
 import org.springframework.retry.backoff.ExponentialBackOffPolicy;
 import org.springframework.retry.policy.SimpleRetryPolicy;
 import org.springframework.retry.support.RetryTemplate;
@@ -30,10 +31,26 @@ import org.springframework.retry.support.RetryTemplate;
  * @Date: 2020-07-05 13:40:17
  */
 @Configuration
+@AutoConfigureBefore({RabbitAutoConfiguration.class})
+@ConditionalOnClass(EnableRabbit.class)
 public class AmqpConfig {
 
-    @Autowired
-    RabbitProperties properties;
+    private RabbitProperties rabbitProperties;
+    private ConnectionFactory connectionFactory;
+
+    public SeeingMqAutoConfiguration(RabbitProperties rabbitProperties, ConnectionFactory connectionFactory) {
+        this.rabbitProperties = rabbitProperties;
+        this.connectionFactory = connectionFactory;
+
+        this.rabbitProperties.getListener().getSimple().setAutoStartup(false);
+        this.rabbitProperties.getListener().getSimple().getRetry().setEnabled(true);
+        this.rabbitProperties.getTemplate().getRetry().setEnabled(true);
+        this.rabbitProperties.setPublisherConfirms(true);
+        if (connectionFactory instanceof CachingConnectionFactory) {
+            ((CachingConnectionFactory) connectionFactory).setPublisherConfirms(true);
+        }
+    }
+
 
 
     private static final Logger logger = LoggerFactory.getLogger(AmqpConfig.class);
@@ -66,7 +83,7 @@ public class AmqpConfig {
 
     @Bean(name = "RabbitTemplate")
     @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-    RabbitTemplate myRabbitTemplate(ConnectionFactory connectionFactory, RetryTemplate retryTemplate) {
+    RabbitTemplate myRabbitTemplate(ConnectionFactory connectionFactory, RabbitProperties rabbitProperties) {
         final RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
         rabbitTemplate.setConfirmCallback(new RabbitTemplate.ConfirmCallback() {
             @Override
@@ -78,7 +95,18 @@ public class AmqpConfig {
             }
         });
         rabbitTemplate.setMessageConverter(new Jackson2JsonMessageConverter());
-        rabbitTemplate.setRetryTemplate(rabbitRetryTemplate());
+        RabbitProperties.Template templateProperties = rabbitProperties.getTemplate();
+        RabbitProperties.Retry retryProperties = templateProperties.getRetry();
+        rabbitTemplate.setRetryTemplate(createRetryTemplate(retryProperties));
+        if (retryProperties.isEnabled()) {
+            rabbitTemplate.setRetryTemplate(createRetryTemplate(retryProperties));
+        }
+        if (templateProperties.getReceiveTimeout() != null) {
+            rabbitTemplate.setReceiveTimeout(templateProperties.getReceiveTimeout().getSeconds() * 1000);
+        }
+        if (templateProperties.getReplyTimeout() != null) {
+            rabbitTemplate.setReplyTimeout(templateProperties.getReplyTimeout().getSeconds() * 1000);
+        }
         return rabbitTemplate;
     }
 
@@ -90,65 +118,16 @@ public class AmqpConfig {
         return factory;
     }
 
-    @Bean
-    public RetryTemplate rabbitRetryTemplate() {
-        RetryTemplate retryTemplate = new RetryTemplate();
-
-        // 设置监听（不是必须）
-        retryTemplate.registerListener(new RetryListener() {
-            @Override
-            public <T, E extends Throwable> boolean open(RetryContext retryContext, RetryCallback<T, E> retryCallback) {
-                // 执行之前调用 （返回false时会终止执行）
-                return true;
-            }
-
-            @Override
-            public <T, E extends Throwable> void close(RetryContext retryContext, RetryCallback<T, E> retryCallback, Throwable throwable) {
-                // 重试结束的时候调用 （最后一次重试 ）
-            }
-
-            @Override
-            public <T, E extends Throwable> void onError(RetryContext retryContext, RetryCallback<T, E> retryCallback, Throwable throwable) {
-                //  异常 都会调用
-                logger.error("-----第{}次调用", retryContext.getRetryCount());
-            }
-        });
-
-        // 个性化处理异常和重试 （不是必须）
-        /* Map<Class<? extends Throwable>, Boolean> retryableExceptions = new HashMap<>();
-        //设置重试异常和是否重试
-        retryableExceptions.put(AmqpException.class, true);
-        //设置重试次数和要重试的异常
-        SimpleRetryPolicy retryPolicy = new SimpleRetryPolicy(5,retryableExceptions);*/
-        retryTemplate.setBackOffPolicy(backOffPolicyByProperties());
-        retryTemplate.setRetryPolicy(retryPolicyByProperties());
-        return retryTemplate;
-    }
-
-
-
-    @Bean
-    public ExponentialBackOffPolicy backOffPolicyByProperties() {
+    private RetryTemplate createRetryTemplate(RabbitProperties.Retry properties) {
+        RetryTemplate template = new RetryTemplate();
+        SimpleRetryPolicy policy = new SimpleRetryPolicy();
+        policy.setMaxAttempts(properties.getMaxAttempts());
+        template.setRetryPolicy(policy);
         ExponentialBackOffPolicy backOffPolicy = new ExponentialBackOffPolicy();
-        long maxInterval = properties.getListener().getSimple().getRetry().getMaxInterval().getSeconds();
-        long initialInterval = properties.getListener().getSimple().getRetry().getInitialInterval().getSeconds();
-        double multiplier = properties.getListener().getSimple().getRetry().getMultiplier();
-        // 重试间隔
-        backOffPolicy.setInitialInterval(initialInterval * 1000);
-        // 重试最大间隔
-        backOffPolicy.setMaxInterval(maxInterval * 1000);
-        // 重试间隔乘法策略
-        backOffPolicy.setMultiplier(multiplier);
-        return backOffPolicy;
+        backOffPolicy.setInitialInterval(properties.getInitialInterval().getSeconds() * 1000);
+        backOffPolicy.setMultiplier(properties.getMultiplier());
+        backOffPolicy.setMaxInterval(properties.getMaxInterval().getSeconds() * 1000);
+        template.setBackOffPolicy(backOffPolicy);
+        return template;
     }
-
-    @Bean
-    public SimpleRetryPolicy retryPolicyByProperties() {
-        SimpleRetryPolicy retryPolicy = new SimpleRetryPolicy();
-        int maxAttempts = properties.getListener().getSimple().getRetry().getMaxAttempts();
-        retryPolicy.setMaxAttempts(maxAttempts);
-        return retryPolicy;
-    }
-
-
 }
