@@ -1,9 +1,7 @@
 package com.bjpowernode.springboot.consumer;
 
-import com.bjpowernode.springboot.common.enums.ErrorTypeEnum;
 import com.bjpowernode.springboot.config.AmqpConfig;
 import com.bjpowernode.springboot.config.DeadQueueConfig;
-import com.bjpowernode.springboot.handler.exception.CustomException;
 import com.bjpowernode.springboot.model.elasticsearch.Student;
 import com.rabbitmq.client.Channel;
 import org.springframework.amqp.core.Message;

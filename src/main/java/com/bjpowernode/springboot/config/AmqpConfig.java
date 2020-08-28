@@ -1,29 +1,30 @@
 package com.bjpowernode.springboot.config;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.*;
-import org.springframework.amqp.rabbit.annotation.EnableRabbit;
+import org.springframework.amqp.rabbit.config.RetryInterceptorBuilder;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
-import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.amqp.rabbit.retry.RejectAndDontRequeueRecoverer;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
-import org.springframework.boot.autoconfigure.AutoConfigureBefore;
-import org.springframework.boot.autoconfigure.amqp.RabbitAutoConfiguration;
 import org.springframework.boot.autoconfigure.amqp.RabbitProperties;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
+import org.springframework.retry.RetryCallback;
+import org.springframework.retry.RetryContext;
+import org.springframework.retry.RetryListener;
 import org.springframework.retry.backoff.ExponentialBackOffPolicy;
 import org.springframework.retry.policy.SimpleRetryPolicy;
 import org.springframework.retry.support.RetryTemplate;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @Author: xb
@@ -31,34 +32,19 @@ import org.springframework.retry.support.RetryTemplate;
  * @Date: 2020-07-05 13:40:17
  */
 @Configuration
-@AutoConfigureBefore({RabbitAutoConfiguration.class})
-@ConditionalOnClass(EnableRabbit.class)
 public class AmqpConfig {
 
-    private RabbitProperties rabbitProperties;
-    private ConnectionFactory connectionFactory;
 
-    public SeeingMqAutoConfiguration(RabbitProperties rabbitProperties, ConnectionFactory connectionFactory) {
-        this.rabbitProperties = rabbitProperties;
-        this.connectionFactory = connectionFactory;
-
-        this.rabbitProperties.getListener().getSimple().setAutoStartup(false);
-        this.rabbitProperties.getListener().getSimple().getRetry().setEnabled(true);
-        this.rabbitProperties.getTemplate().getRetry().setEnabled(true);
-        this.rabbitProperties.setPublisherConfirms(true);
-        if (connectionFactory instanceof CachingConnectionFactory) {
-            ((CachingConnectionFactory) connectionFactory).setPublisherConfirms(true);
-        }
-    }
-
-
-
+    @Autowired
+    RabbitProperties properties;
     private static final Logger logger = LoggerFactory.getLogger(AmqpConfig.class);
     // 直连交换器
     public static final String SONG_EXCHANGE = "song_exchange";
     public static final String SONG_QUEUE = "song_queue";
     public static final String ROUTING_KEY = "songKey";
 
+
+    //可用可不用
     // 创建一个队列, 如果存在死信时则交由死信交换器转存到死信队列
     @Bean
     public Queue queue() {
@@ -80,54 +66,109 @@ public class AmqpConfig {
         return BindingBuilder.bind(queue()).to(directExchange()).with(ROUTING_KEY);
     }
 
+    /**
+     * 定义消息转换实例
+     */
 
     @Bean(name = "RabbitTemplate")
     @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-    RabbitTemplate myRabbitTemplate(ConnectionFactory connectionFactory, RabbitProperties rabbitProperties) {
+    RabbitTemplate myRabbitTemplate(ConnectionFactory connectionFactory) {
         final RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
         rabbitTemplate.setConfirmCallback(new RabbitTemplate.ConfirmCallback() {
             @Override
             public void confirm(CorrelationData correlationData, boolean ack, String cause) {
+                //日后可用来做发送消息到服务器失败 进行人工调度等操作
+                //情况发生场景:网络波动异常、服务器异常
                 System.out.println("进来了" + correlationData.getId());
                 if (!ack) {
                     logger.info("MQ消息发送失败，消息重发");
                 }
             }
         });
+
         rabbitTemplate.setMessageConverter(new Jackson2JsonMessageConverter());
-        RabbitProperties.Template templateProperties = rabbitProperties.getTemplate();
-        RabbitProperties.Retry retryProperties = templateProperties.getRetry();
-        rabbitTemplate.setRetryTemplate(createRetryTemplate(retryProperties));
-        if (retryProperties.isEnabled()) {
-            rabbitTemplate.setRetryTemplate(createRetryTemplate(retryProperties));
-        }
-        if (templateProperties.getReceiveTimeout() != null) {
-            rabbitTemplate.setReceiveTimeout(templateProperties.getReceiveTimeout().getSeconds() * 1000);
-        }
-        if (templateProperties.getReplyTimeout() != null) {
-            rabbitTemplate.setReplyTimeout(templateProperties.getReplyTimeout().getSeconds() * 1000);
-        }
         return rabbitTemplate;
     }
 
     @Bean
     public SimpleRabbitListenerContainerFactory rabbitListenerContainerFactory(ConnectionFactory connectionFactory) {
-        SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
-        factory.setConnectionFactory(connectionFactory);
-        factory.setMessageConverter(new Jackson2JsonMessageConverter());
-        return factory;
+        SimpleRabbitListenerContainerFactory containerFactory = new SimpleRabbitListenerContainerFactory();
+        containerFactory.setConnectionFactory(connectionFactory);
+        // 并发消费者数量
+        containerFactory.setConcurrentConsumers(1);
+        containerFactory.setMaxConcurrentConsumers(20);
+        // 手动应答
+        containerFactory.setAcknowledgeMode(AcknowledgeMode.MANUAL);
+        containerFactory.setMessageConverter(new Jackson2JsonMessageConverter());
+        containerFactory.setChannelTransacted(true);
+        containerFactory.setAdviceChain(
+                RetryInterceptorBuilder
+                        .stateless()
+                        .recoverer(new RejectAndDontRequeueRecoverer())
+                        .retryOperations(rabbitRetryTemplate())
+                        .build()
+        );
+        return containerFactory;
     }
 
-    private RetryTemplate createRetryTemplate(RabbitProperties.Retry properties) {
-        RetryTemplate template = new RetryTemplate();
-        SimpleRetryPolicy policy = new SimpleRetryPolicy();
-        policy.setMaxAttempts(properties.getMaxAttempts());
-        template.setRetryPolicy(policy);
-        ExponentialBackOffPolicy backOffPolicy = new ExponentialBackOffPolicy();
-        backOffPolicy.setInitialInterval(properties.getInitialInterval().getSeconds() * 1000);
-        backOffPolicy.setMultiplier(properties.getMultiplier());
-        backOffPolicy.setMaxInterval(properties.getMaxInterval().getSeconds() * 1000);
-        template.setBackOffPolicy(backOffPolicy);
-        return template;
+    @Bean
+    public RetryTemplate rabbitRetryTemplate() {
+        RetryTemplate retryTemplate = new RetryTemplate();
+
+        // 设置监听（不是必须）
+        retryTemplate.registerListener(new RetryListener() {
+            @Override
+            public <T, E extends Throwable> boolean open(RetryContext retryContext, RetryCallback<T, E> retryCallback) {
+                // 执行之前调用 （返回false时会终止执行）
+                return true;
+            }
+
+            @Override
+            public <T, E extends Throwable> void close(RetryContext retryContext, RetryCallback<T, E> retryCallback, Throwable throwable) {
+                // 重试结束的时候调用 （最后一次重试 ）
+            }
+
+            @Override
+            public <T, E extends Throwable> void onError(RetryContext retryContext, RetryCallback<T, E> retryCallback, Throwable throwable) {
+                //  异常 都会调用
+                logger.error("-----第{}次调用", retryContext.getRetryCount());
+            }
+        });
+
+        // 个性化处理异常和重试 （不是必须）
+        /* Map<Class<? extends Throwable>, Boolean> retryableExceptions = new HashMap<>();
+        //设置重试异常和是否重试
+        retryableExceptions.put(AmqpException.class, true);
+        //设置重试次数和要重试的异常
+        SimpleRetryPolicy retryPolicy = new SimpleRetryPolicy(5,retryableExceptions);*/
+
+        retryTemplate.setBackOffPolicy(backOffPolicyByProperties());
+        retryTemplate.setRetryPolicy(retryPolicyByProperties());
+        return retryTemplate;
     }
+
+    @Bean
+    public ExponentialBackOffPolicy backOffPolicyByProperties() {
+        ExponentialBackOffPolicy backOffPolicy = new ExponentialBackOffPolicy();
+        long maxInterval = properties.getListener().getSimple().getRetry().getMaxInterval().getSeconds();
+        long initialInterval = properties.getListener().getSimple().getRetry().getInitialInterval().getSeconds();
+        double multiplier = properties.getListener().getSimple().getRetry().getMultiplier();
+        // 重试间隔
+        backOffPolicy.setInitialInterval(initialInterval * 1000);
+        // 重试最大间隔
+        backOffPolicy.setMaxInterval(maxInterval * 1000);
+        // 重试间隔乘法策略
+        backOffPolicy.setMultiplier(multiplier);
+        return backOffPolicy;
+    }
+
+    @Bean
+    public SimpleRetryPolicy retryPolicyByProperties() {
+        SimpleRetryPolicy retryPolicy = new SimpleRetryPolicy();
+        int maxAttempts = properties.getListener().getSimple().getRetry().getMaxAttempts();
+        retryPolicy.setMaxAttempts(maxAttempts);
+        return retryPolicy;
+    }
+
+
 }

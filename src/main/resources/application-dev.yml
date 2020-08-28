@@ -48,19 +48,14 @@ spring:
     #  username: admin
     # password: admin
     virtual-host: /
-    publisher-returns: true
-    publisher-confirms: true
     listener:
       simple:
         retry:
-          # 开启消费者(程序出现异常)重试机制，默认开启并一直重试
           enabled: true
-          # 最大重试次数
-          max-attempts: 5
-          # 重试间隔时间(毫秒)
-          initial-interval: 3000
-        # 开启手动ack
-        acknowledge-mode: manual
+          max-attempts: 2
+          initial-interval: 3000 #重试间隔时间（单位毫秒）
+          max-interval: 100000
+        default-requeue-rejected: true
 
   elasticsearch:
     rest:
