@@ -2,7 +2,7 @@ package com.bjpowernode.springboot.controller;
 
 import com.bjpowernode.springboot.common.utils.ResponseUtils;
 import com.bjpowernode.springboot.common.utils.Response;
-import com.bjpowernode.springboot.model.elasticsearch.Course;
+import com.bjpowernode.springboot.model.domian.elasticsearch.Course;
 import com.bjpowernode.springboot.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;

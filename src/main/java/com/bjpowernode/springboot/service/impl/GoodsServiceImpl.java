@@ -3,15 +3,13 @@ package com.bjpowernode.springboot.service.impl;
 import com.bjpowernode.springboot.common.utils.ResponseUtils;
 import com.bjpowernode.springboot.mapper.goods.GoodsMapper;
 import com.bjpowernode.springboot.mapper.orders.OrdersMapper;
-import com.bjpowernode.springboot.model.good.Goods;
-import com.bjpowernode.springboot.model.order.Orders;
+import com.bjpowernode.springboot.model.domian.good.Goods;
+import com.bjpowernode.springboot.model.domian.order.Orders;
 import com.bjpowernode.springboot.common.utils.Response;
 import com.bjpowernode.springboot.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import tk.mybatis.mapper.weekend.Weekend;
-import tk.mybatis.mapper.weekend.WeekendCriteria;
 
 import java.util.Date;
 import java.util.List;

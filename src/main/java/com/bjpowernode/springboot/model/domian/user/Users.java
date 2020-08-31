@@ -1,4 +1,4 @@
-package com.bjpowernode.springboot.model.user;
+package com.bjpowernode.springboot.model.domian.user;
 
 
 

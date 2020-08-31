@@ -1,6 +1,6 @@
 package com.bjpowernode.springboot.service;
 
-import com.bjpowernode.springboot.model.elasticsearch.Student;
+import com.bjpowernode.springboot.model.domian.elasticsearch.Student;
 
 import java.util.List;
 

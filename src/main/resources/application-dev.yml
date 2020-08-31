@@ -45,9 +45,11 @@ spring:
   rabbitmq:
     host: 192.168.1.43
     port: 5672
-    #  username: admin
-    # password: admin
+     # username: admin
+     # password: admin
     virtual-host: /
+    publisher-returns: true
+    publisher-confirms: true
     listener:
       simple:
         retry:
@@ -55,7 +57,7 @@ spring:
           max-attempts: 2
           initial-interval: 3000 #重试间隔时间（单位毫秒）
           max-interval: 100000
-        default-requeue-rejected: true
+        acknowledge-mode: manual
 
   elasticsearch:
     rest:

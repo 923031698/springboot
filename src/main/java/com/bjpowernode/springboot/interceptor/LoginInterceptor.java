@@ -1,7 +1,6 @@
 package com.bjpowernode.springboot.interceptor;
 
-import com.bjpowernode.springboot.common.utils.ResponseUtils;
-import com.bjpowernode.springboot.model.user.Users;
+import com.bjpowernode.springboot.model.domian.user.Users;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;

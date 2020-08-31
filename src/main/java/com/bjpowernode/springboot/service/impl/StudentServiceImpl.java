@@ -1,7 +1,7 @@
 package com.bjpowernode.springboot.service.impl;
 
 import cn.hutool.core.util.IdUtil;
-import com.bjpowernode.springboot.model.elasticsearch.Student;
+import com.bjpowernode.springboot.model.domian.elasticsearch.Student;
 import com.bjpowernode.springboot.repository.StudentRepository;
 import com.bjpowernode.springboot.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;

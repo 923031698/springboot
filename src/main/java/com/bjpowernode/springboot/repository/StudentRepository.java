@@ -1,6 +1,6 @@
 package com.bjpowernode.springboot.repository;
 
-import com.bjpowernode.springboot.model.elasticsearch.Student;
+import com.bjpowernode.springboot.model.domian.elasticsearch.Student;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 
 /**

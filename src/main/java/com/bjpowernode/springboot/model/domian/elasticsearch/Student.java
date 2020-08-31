@@ -1,4 +1,4 @@
-package com.bjpowernode.springboot.model.elasticsearch;
+package com.bjpowernode.springboot.model.domian.elasticsearch;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;

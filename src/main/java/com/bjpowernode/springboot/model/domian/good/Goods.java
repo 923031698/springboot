@@ -1,4 +1,4 @@
-package com.bjpowernode.springboot.model.good;
+package com.bjpowernode.springboot.model.domian.good;
 
 import lombok.Data;
 

@@ -2,13 +2,12 @@ package com.bjpowernode.springboot.message;
 
 import com.alibaba.fastjson.JSONObject;
 import com.bjpowernode.springboot.config.AmqpConfig;
-import com.bjpowernode.springboot.model.elasticsearch.Student;
+import com.bjpowernode.springboot.model.domian.elasticsearch.Student;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;

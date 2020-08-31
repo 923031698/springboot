@@ -1,6 +1,6 @@
 package com.bjpowernode.springboot.controller;
 
-import com.bjpowernode.springboot.model.good.Goods;
+import com.bjpowernode.springboot.model.domian.good.Goods;
 import com.bjpowernode.springboot.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

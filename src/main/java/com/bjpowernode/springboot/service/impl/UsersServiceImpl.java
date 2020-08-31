@@ -1,15 +1,14 @@
 package com.bjpowernode.springboot.service.impl;
 
-import cn.hutool.core.util.StrUtil;
 import com.bjpowernode.springboot.common.enums.ErrorTypeEnum;
 import com.bjpowernode.springboot.common.utils.ResponseUtils;
 import com.bjpowernode.springboot.handler.exception.CustomException;
 import com.bjpowernode.springboot.mapper.users.UsersMapper;
 import com.bjpowernode.springboot.common.utils.Response;
-import com.bjpowernode.springboot.model.user.Users;
+import com.bjpowernode.springboot.model.domian.user.Users;
 import com.bjpowernode.springboot.service.RedisService;
 import com.bjpowernode.springboot.service.UsersService;
-import org.apache.catalina.User;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -19,8 +18,9 @@ import tk.mybatis.mapper.weekend.WeekendCriteria;
 import tk.mybatis.mapper.weekend.WeekendSqls;
 
 import java.util.List;
-import java.util.Optional;
 
+
+@Log4j2
 @Service
 public class UsersServiceImpl implements UsersService {
 
@@ -95,6 +95,8 @@ public class UsersServiceImpl implements UsersService {
                         .andEqualTo(Users::getPhone, "18667039325")
                         .andEqualTo(Users::getAccount, "DD2020072300007")).build());
 
+
+        log.info("21312312313");
 
 
         return ResponseUtils.success(users);
