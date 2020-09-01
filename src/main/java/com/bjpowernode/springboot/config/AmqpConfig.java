@@ -10,8 +10,6 @@ import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFacto
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.amqp.rabbit.retry.MessageRecoverer;
-import org.springframework.amqp.rabbit.retry.RepublishMessageRecoverer;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Bean;
@@ -90,8 +88,8 @@ public class AmqpConfig {
         return factory;
     }
 
-    @Bean
+   /* @Bean
     public MessageRecoverer messageRecoverer(RabbitTemplate rabbitTemplate) {
         return new RepublishMessageRecoverer(rabbitTemplate, DeadQueueConfig.DEAD_MESSAGE_EXCHANGE, DeadQueueConfig.DEAD_MESSAGE_ROUTING_KEY);
-    }
+    }*/
 }

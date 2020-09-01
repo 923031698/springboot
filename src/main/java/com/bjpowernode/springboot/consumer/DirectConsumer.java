@@ -28,7 +28,7 @@ public class DirectConsumer {
         // int  a= 10/0;
         // sleep(15000);
 
-        if (student.getAge() != 13) {
+        if (student.getAge() != 12) {
             System.out.println("消息重试！");
             throw  new RuntimeException("查询到的结果为空！");
         } else {
