@@ -1,10 +1,10 @@
 package com.bjpowernode.springboot.config4jta;
 
+import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
 import com.mysql.cj.jdbc.MysqlXADataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
-import tk.mybatis.spring.annotation.MapperScan;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.jta.atomikos.AtomikosDataSourceBean;
@@ -52,9 +52,12 @@ public class UserDBDataSource4jtaConfig {
 
     @Bean(name = "userdbSqlSessionFactory")
     public SqlSessionFactory userdbSqlSessionFactory(@Qualifier("userdbDataSource") DataSource userdbDataSource) throws Exception {
-        SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
-        sqlSessionFactoryBean.setDataSource(userdbDataSource);
-        return sqlSessionFactoryBean.getObject();
+        //  如果使用mybatis-plus  就换成下面这个  切记如果不替换的话 可能找到欲哭无泪
+        MybatisSqlSessionFactoryBean mybatisSqlSessionFactoryBean = new MybatisSqlSessionFactoryBean();
+        //  如果使用mybatis 就换成下面这个
+        // SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
+        mybatisSqlSessionFactoryBean.setDataSource(userdbDataSource);
+        return mybatisSqlSessionFactoryBean.getObject();
     }
 
     @Bean(name = "userdbSqlSessionTemplate")

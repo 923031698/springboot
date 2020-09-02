@@ -1,7 +1,8 @@
 package com.bjpowernode.springboot.mapper.users;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.bjpowernode.springboot.model.domian.user.Users;
-import tk.mybatis.mapper.common.Mapper;
 
-public interface UsersMapper extends Mapper<Users> {
+public interface UsersMapper extends BaseMapper<Users> {
+
 }

@@ -57,6 +57,7 @@ public class UsersController {
     }
 
     @RequestMapping("/boot/add")
+    @ResponseBody
     public Response add() {
         usersService.add();
         return ResponseUtils.success();
