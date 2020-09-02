@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 
 
 @Log4j2
@@ -61,6 +62,9 @@ public class UsersServiceImpl implements UsersService {
         System.out.println("userservice show方法执行了.............");
     }
 
+    /**
+     * 新增
+     */
     public void add() {
         Users user = new Users();
         user.setPassword("123123");
@@ -75,8 +79,8 @@ public class UsersServiceImpl implements UsersService {
     }
 
     public Response select() {
-
-        return ResponseUtils.success();
+        List<Users> users = usersMapper.selectList(null);
+        return ResponseUtils.success(users);
     }
 
 

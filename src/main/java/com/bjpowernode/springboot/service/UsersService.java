@@ -4,15 +4,15 @@ import com.bjpowernode.springboot.common.utils.Response;
 
 public interface UsersService {
 
-    public Response register(String phone, String password);
+    Response register(String phone, String password);
 
-    public Response login(String phone, String password);
+    Response login(String phone, String password);
 
-    public void show();
+    void show();
 
-    public void add();
+    void add();
 
-    public void update();
+    void update();
 
     Response select();
 }
