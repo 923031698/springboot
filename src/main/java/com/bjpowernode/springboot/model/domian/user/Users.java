@@ -6,14 +6,13 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @Data
-@TableName("users")
 public class Users implements Serializable {
 
     private static final long serialVersionUID = -3691556073652514317L;
 
-    @TableId("id")
     private String id;
 
     private String nick;
@@ -25,6 +24,12 @@ public class Users implements Serializable {
     private String email;
 
     private String account;
+
+    private String name;
+
+    private Integer age;
+
+    private LocalDateTime createTime;
 
 
 }
