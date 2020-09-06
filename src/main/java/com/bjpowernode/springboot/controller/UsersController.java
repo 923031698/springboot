@@ -8,21 +8,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-@Controller
+@RestController
 public class UsersController {
 
     @Autowired
     private UsersService usersService;
 
     @RequestMapping("/boot/register")
-    public @ResponseBody
-    String register(HttpSession session,
-                    @RequestParam("phone") String phone,
-                    @RequestParam("password") String password) {
+    public String register(HttpSession session,
+                           @RequestParam("phone") String phone,
+                           @RequestParam("password") String password) {
 
         Response response = usersService.register(phone, password);
 
@@ -61,11 +61,17 @@ public class UsersController {
         usersService.add();
         return ResponseUtils.success();
     }
+
     @RequestMapping("/boot/update")
     public Response update() {
         usersService.update();
         return ResponseUtils.success();
     }
 
+    @RequestMapping("/boot/select")
+    public Response select() {
+        Response response = usersService.select();
+        return response;
+    }
 
 }

@@ -1,10 +1,10 @@
 package com.bjpowernode.springboot.mapper.orders;
 
 
-import com.bjpowernode.springboot.model.order.Orders;
-import tk.mybatis.mapper.common.Mapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.bjpowernode.springboot.model.domian.order.Orders;
 
-public interface OrdersMapper   extends Mapper<Orders> {
+public interface OrdersMapper extends BaseMapper<Orders> {
 
 
 }

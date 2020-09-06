@@ -43,14 +43,20 @@ spring:
     timeout: 5000
 
   rabbitmq:
-    host: 120.26.69.124
+    host: 192.168.1.43
     port: 5672
-    username: admin
-    password: admin
+     # username: admin
+     # password: admin
     virtual-host: /
+    publisher-returns: true
+    publisher-confirms: true
     listener:
-      type: simple
       simple:
+        retry:
+          enabled: true
+          max-attempts: 2
+          initial-interval: 3000 #重试间隔时间（单位毫秒）
+          max-interval: 100000
         acknowledge-mode: manual
 
   elasticsearch:
@@ -66,3 +72,4 @@ jgs:
     phone: 13700000000
     email: cat@163.com
     address: beijing
+

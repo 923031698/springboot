@@ -3,8 +3,8 @@ package com.bjpowernode.springboot.service.impl;
 import com.bjpowernode.springboot.common.utils.ResponseUtils;
 import com.bjpowernode.springboot.mapper.goods.GoodsMapper;
 import com.bjpowernode.springboot.mapper.orders.OrdersMapper;
-import com.bjpowernode.springboot.model.good.Goods;
-import com.bjpowernode.springboot.model.order.Orders;
+import com.bjpowernode.springboot.model.domian.good.Goods;
+import com.bjpowernode.springboot.model.domian.order.Orders;
 import com.bjpowernode.springboot.common.utils.Response;
 import com.bjpowernode.springboot.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,11 +24,12 @@ public class GoodsServiceImpl implements GoodsService {
     private OrdersMapper ordersMapper;
 
     public List<Goods> getAllGoods() {
-        return goodsMapper.selectAll();
+        //return goodsMapper.selectAll();
+        return null;
     }
 
     public Goods getGoodsById(Integer goodsId) {
-        return goodsMapper.selectByPrimaryKey(goodsId);
+        return null;
     }
 
     /**
@@ -45,7 +46,7 @@ public class GoodsServiceImpl implements GoodsService {
         Goods goods = new Goods();
         goods.setId(goodsId);
         goods.setStore(buyNum);
-        goodsMapper.updateByPrimaryKeySelective(goods);
+        // goodsMapper.updateByPrimaryKeySelective(goods);
         //下订单
         Orders orders = new Orders();
         orders.setBuynum(buyNum);
@@ -53,9 +54,19 @@ public class GoodsServiceImpl implements GoodsService {
         orders.setCreatetime(new Date());
         orders.setGoodsid(goodsId);
         //操作订单库
-        ordersMapper.insertSelective(orders);
+        //    ordersMapper.insertSelective(orders);
         //发生异常，测试是否回滚
         int i = 10 / 0;
         return ResponseUtils.success();
     }
+
+
+    /*  public Response select() {
+     *//* Weekend<Goods> weekend = new Weekend(Goods.class);
+        Goods goods = new Goods();
+        WeekendCriteria weekendCriteria = weekend.weekendCriteria().andEqualTo(Goods::getName,);
+
+
+        goodsMapper.selectByExample(weekend);*//*
+    }*/
 }

@@ -1,14 +1,17 @@
 package com.bjpowernode.springboot.message;
 
+import com.alibaba.fastjson.JSONObject;
 import com.bjpowernode.springboot.config.AmqpConfig;
-import com.bjpowernode.springboot.model.elasticsearch.Student;
+import com.bjpowernode.springboot.model.domian.elasticsearch.Student;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.UUID;
+
 
 /**
  * @Author: bjb
@@ -17,34 +20,53 @@ import org.springframework.stereotype.Component;
  */
 @Log4j2
 @Component
-public class MessageProducer implements RabbitTemplate.ConfirmCallback, RabbitTemplate.ReturnCallback {
+public class MessageProducer {
+
 
     @Autowired
-    private AmqpTemplate amqpTemplate;
+    RabbitTemplate rabbitTemplate;
 
-    public  void  sendMessage(Student student){
-        amqpTemplate.convertAndSend(AmqpConfig.SONG_EXCHANGE, AmqpConfig.ROUTING_KEY,student);
-     //   log.info("发送消息:"+student.toString());
+    /* @Autowired
+     private RabbitTemplate rabbitTemplate;
+
+    @PostConstruct
+     public void init() {
+         rabbitTemplate.setConfirmCallback(confirmCallback);            //指定 ConfirmCallback
+         rabbitTemplate.setReturnCallback(returnCallback);             //指定 ReturnCallback
+
+     }*/
+    public void sendMessage(Student student) {
+        String orderId = UUID.randomUUID().toString();
+        CorrelationData correlationData = new CorrelationData(JSONObject.toJSONString(student));
+//        rabbitTemplate.setConfirmCallback(confirmCallback);
+//        rabbitTemplate.setReturnCallback(returnCallback);
+        rabbitTemplate.convertAndSend(AmqpConfig.SONG_EXCHANGE, AmqpConfig.ROUTING_KEY, student, correlationData);
     }
 
-    @Override
-    public void confirm(CorrelationData correlationData, boolean ack, String cause) {
-        if (ack) {
-            System.out.println("消息发送成功:" + correlationData);
-        } else {
-            System.out.println("消息发送失败:" + cause);
+    /**
+     * 回调函数: confirm确认
+     */
+    final RabbitTemplate.ConfirmCallback confirmCallback = new RabbitTemplate.ConfirmCallback() {
+        @Override
+        public void confirm(CorrelationData correlationData, boolean ack, String cause) {
+            log.info("correlationData:{}; ack:{}; cause:{}", correlationData, ack, cause);
+            if (!ack) {
+                log.error("回调函数: confirm确认异常correlationData:{}; ack:{}; cause:{}", correlationData, ack, cause);
+            }
         }
+    };
+
+    /**
+     * 回调函数: return返回
+     */
+    final RabbitTemplate.ReturnCallback returnCallback = new RabbitTemplate.ReturnCallback() {
+        @Override
+        public void returnedMessage(Message message, int replyCode, String replyText,
+                                    String exchange, String routingKey) {
+            log.info("return exchange: " + exchange + ", routingKey: "
+                    + routingKey + ", replyCode: " + replyCode + ", replyText: " + replyText);
+        }
+    };
 
 
-    }
-
-    @Override
-    public void returnedMessage(Message message, int replyCode, String replyText, String exchange, String routingKey) {
-        System.out.println("消息主体message: " + message);
-        System.out.println("消息主体message: " + replyCode);
-        System.out.println("描述: " + replyText);
-        System.out.println("消息使用的交换器exchange: " + exchange);
-        System.out.println("消息使用的路由键routing: " + routingKey);
-
-    }
 }

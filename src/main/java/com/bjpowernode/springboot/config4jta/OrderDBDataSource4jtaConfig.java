@@ -1,10 +1,11 @@
 package com.bjpowernode.springboot.config4jta;
 
+import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
 import com.mysql.cj.jdbc.MysqlXADataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
-import tk.mybatis.spring.annotation.MapperScan;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.jta.atomikos.AtomikosDataSourceBean;
@@ -52,9 +53,12 @@ public class OrderDBDataSource4jtaConfig {
 
     @Bean(name = "orderdbSqlSessionFactory")
     public SqlSessionFactory orderdbSqlSessionFactory(@Qualifier("orderdbDataSource") DataSource orderdbDataSource) throws Exception {
+        //  如果使用mybatis-plus  就换成下面这个  切记如果不替换的话 可能找到欲哭无泪
+        MybatisSqlSessionFactoryBean mybatisSqlSessionFactoryBean = new MybatisSqlSessionFactoryBean();
+        //  如果使用mybatis 就换成下面这个
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
-        sqlSessionFactoryBean.setDataSource(orderdbDataSource);
-        return sqlSessionFactoryBean.getObject();
+        mybatisSqlSessionFactoryBean.setDataSource(orderdbDataSource);
+        return mybatisSqlSessionFactoryBean.getObject();
     }
 
     @Bean(name = "orderdbSqlSessionTemplate")

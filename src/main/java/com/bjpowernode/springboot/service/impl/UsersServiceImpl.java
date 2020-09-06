@@ -5,18 +5,24 @@ import com.bjpowernode.springboot.common.utils.ResponseUtils;
 import com.bjpowernode.springboot.handler.exception.CustomException;
 import com.bjpowernode.springboot.mapper.users.UsersMapper;
 import com.bjpowernode.springboot.common.utils.Response;
-import com.bjpowernode.springboot.model.user.Users;
+import com.bjpowernode.springboot.model.domian.user.Users;
 import com.bjpowernode.springboot.service.RedisService;
 import com.bjpowernode.springboot.service.UsersService;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
+
+@Log4j2
 @Service
 public class UsersServiceImpl implements UsersService {
 
     @Autowired
     private UsersMapper usersMapper;
+
 
     /**
      * 注入即可使用
@@ -38,13 +44,13 @@ public class UsersServiceImpl implements UsersService {
     }
 
     public Response login(String phone, String password) {
-        Users users1 = new Users();
+      /*  Users users1 = new Users();
         users1.setPhone(phone);
         users1.setPassword(password);
-        Users users = usersMapper.selectOne(users1);
+        Users users = usersMapper.se(users1);
         if (users == null) {
             throw new CustomException(ErrorTypeEnum.QUERY_FAILURE);
-        }
+        }*/
         return ResponseUtils.success();
     }
 
@@ -56,21 +62,25 @@ public class UsersServiceImpl implements UsersService {
         System.out.println("userservice show方法执行了.............");
     }
 
+    /**
+     * 新增
+     */
     public void add() {
-        Users users = new Users();
-        users.setPassword("123456");
-        users.setPhone("110");
-        users.setAccount(redisService.incrSerial("DD"));
-        usersMapper.insertSelective(users);
+        Users user = new Users();
+        user.setPassword("123123");
+        user.setPhone("18667039325");
+        user.setEmail("923031698@qq.com");
+        user.setAccount("123123123");
+        usersMapper.insert(user);
     }
 
     public void update() {
-        Users users = usersMapper.selectByPrimaryKey("5f17af00ef90d443c93e067b");
-        users.setNick("123213");
-        users.setPassword("123456");
-        users.setPhone("110");
-        users.setAccount("12345");
-        usersMapper.updateByPrimaryKeySelective(users);
+
+    }
+
+    public Response select() {
+        List<Users> users = usersMapper.selectList(null);
+        return ResponseUtils.success(users);
     }
 
 

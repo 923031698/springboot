@@ -1,4 +1,4 @@
-package com.bjpowernode.springboot.model.order;
+package com.bjpowernode.springboot.model.domian.order;
 
 import lombok.Data;
 

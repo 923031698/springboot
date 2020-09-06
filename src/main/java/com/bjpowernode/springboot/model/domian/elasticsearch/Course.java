@@ -1,4 +1,4 @@
-package com.bjpowernode.springboot.model.elasticsearch;
+package com.bjpowernode.springboot.model.domian.elasticsearch;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;
@@ -14,13 +14,13 @@ import java.io.Serializable;
  * @Date: 2020-06-21 22:06:33
  * @Company: 乐木几网络科技有限公司
  */
-@Document(indexName = "course",type = "_doc")
+@Document(indexName = "course", type = "_doc")
 @Data
 public class Course implements Serializable {
     @Id
-    private  String id;
+    private String id;
 
-   @Field(analyzer = "ik_max_word",searchAnalyzer = "ik_max_word",type = FieldType.Text)
+    @Field(analyzer = "ik_max_word", searchAnalyzer = "ik_max_word", type = FieldType.Text)
     private String courseTitle;
     /**
      * 課程老師
@@ -35,7 +35,7 @@ public class Course implements Serializable {
     /**
      * 课程图片
      */
-    private  String courseImage;
+    private String courseImage;
     /**
      * 課程連接
      */
@@ -44,8 +44,6 @@ public class Course implements Serializable {
      * 课程介绍
      */
     private String courseIntroduce;
-
-
 
 
 }
