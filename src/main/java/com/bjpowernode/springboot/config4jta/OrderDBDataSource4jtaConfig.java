@@ -1,11 +1,14 @@
 package com.bjpowernode.springboot.config4jta;
 
+import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
 import com.mysql.cj.jdbc.MysqlXADataSource;
+import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.jta.atomikos.AtomikosDataSourceBean;
@@ -17,6 +20,9 @@ import javax.sql.DataSource;
 @Configuration // == xml
 @MapperScan(basePackages = {"com.bjpowernode.springboot.mapper.orders"}, sqlSessionFactoryRef = "orderdbSqlSessionFactory")
 public class OrderDBDataSource4jtaConfig {
+
+    @Autowired
+    MybatisPlusInterceptor mybatisPlusInterceptor;
 
     @Value("${spring.datasource.orderdb.username}")
     private String username;
@@ -58,6 +64,8 @@ public class OrderDBDataSource4jtaConfig {
         //  如果使用mybatis 就换成下面这个
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         mybatisSqlSessionFactoryBean.setDataSource(orderdbDataSource);
+        Interceptor[] plugins = {mybatisPlusInterceptor};
+        mybatisSqlSessionFactoryBean.setPlugins(plugins);
         return mybatisSqlSessionFactoryBean.getObject();
     }
 

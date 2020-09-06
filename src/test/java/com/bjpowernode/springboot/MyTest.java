@@ -2,10 +2,11 @@ package com.bjpowernode.springboot;
 
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.bjpowernode.springboot.mapper.users.UsersMapper;
 import com.bjpowernode.springboot.model.domian.user.Users;
 import org.junit.Test;
@@ -365,7 +366,7 @@ public class MyTest {
     }
 
     /**
-     * lambda表达式用法
+     * lambda表达式用法1
      */
     @Test
     public void selectByWrapperLambda() {
@@ -377,5 +378,34 @@ public class MyTest {
         System.out.println(users.toString());
     }
 
+    /**
+     * lambda表达式用法2
+     */
+    @Test
+    public void selectByWrapperLambda3() {
+        List<Users> list = new LambdaQueryChainWrapper<Users>(usersMapper).like(Users::getPhone
+                , "18667039325").list();
+        System.out.println(list.toString());
+    }
 
+    /**
+     * 自定义xml
+     */
+    @Test
+    public void selectByUserId() {
+        Users users = usersMapper.selectByUserId("5");
+        System.out.println(users.toString());
+    }
+
+    /**
+     * lambda分页
+     */
+    @Test
+    public void selectPage() {
+        IPage<Users> page = usersMapper.selectPage(new Page<>(1, 2),new LambdaQueryWrapper<Users>().like(Users::getPhone, "18667039325"));
+        System.out.println("总页数:" + page.getPages());
+        System.out.println("总记录数:" + page.getTotal());
+        List<Users> list = page.getRecords();
+        list.forEach(System.out::println);
+    }
 }

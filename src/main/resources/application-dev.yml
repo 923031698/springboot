@@ -43,10 +43,10 @@ spring:
     timeout: 5000
 
   rabbitmq:
-    host: 192.168.1.43
+    host: 120.26.69.124
     port: 5672
-     # username: admin
-     # password: admin
+    username: admin
+    password: admin
     virtual-host: /
     publisher-returns: true
     publisher-confirms: true

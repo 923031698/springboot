@@ -1,10 +1,6 @@
 package com.bjpowernode.springboot.model.domian.user;
 
 
-import com.baomidou.mybatisplus.annotation.SqlCondition;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -27,7 +23,6 @@ public class Users implements Serializable {
 
     private String account;
 
-    @TableField(condition = SqlCondition.LIKE)
     private String name;
 
     private Integer age;
