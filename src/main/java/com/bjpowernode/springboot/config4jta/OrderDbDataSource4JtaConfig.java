@@ -19,7 +19,7 @@ import javax.sql.DataSource;
 
 @Configuration // == xml
 @MapperScan(basePackages = {"com.bjpowernode.springboot.mapper.orders"}, sqlSessionFactoryRef = "orderdbSqlSessionFactory")
-public class OrderDBDataSource4jtaConfig {
+public class OrderDbDataSource4JtaConfig {
 
     @Autowired
     MybatisPlusInterceptor mybatisPlusInterceptor;

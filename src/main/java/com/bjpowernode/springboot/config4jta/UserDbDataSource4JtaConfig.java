@@ -1,7 +1,6 @@
 package com.bjpowernode.springboot.config4jta;
 
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
-import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
 import com.mysql.cj.jdbc.MysqlXADataSource;
 import org.apache.ibatis.plugin.Interceptor;
@@ -17,14 +16,16 @@ import org.springframework.context.annotation.Configuration;
 
 import javax.sql.DataSource;
 
-@Configuration // == xml
+/**
+ * @Author: xb
+ * @Date: 2020/9/14 12:08
+ */
+@Configuration
 @MapperScan(basePackages = {"com.bjpowernode.springboot.mapper.users"}, sqlSessionFactoryRef = "userdbSqlSessionFactory")
-public class UserDBDataSource4jtaConfig {
+public class UserDbDataSource4JtaConfig {
 
-   /* @Autowired
-    private PaginationInterceptor paginationInterceptor;
-*/
-   @Autowired
+
+    @Autowired
     MybatisPlusInterceptor mybatisPlusInterceptor;
 
     @Value("${spring.datasource.userdb.username}")
@@ -41,8 +42,6 @@ public class UserDBDataSource4jtaConfig {
 
     /**
      * 配置一个数据源的bean
-     *
-     * @return
      */
     @Bean(name = "userdbDataSource")
     public DataSource userdbDataSource() {
