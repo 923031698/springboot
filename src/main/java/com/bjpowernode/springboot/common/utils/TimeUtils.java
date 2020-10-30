@@ -101,6 +101,18 @@ public class TimeUtils {
     }
 
     /**
+     * 得到系统当前日期的前一天
+     * "yyyy-MM-dd"
+     */
+    public static String beforeDayByNowDay() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DATE, -1); //得到前一天
+        Date date = calendar.getTime();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        return df.format(date);
+    }
+
+    /**
      * 获取一段时间的每一天日期
      *
      * @param start yyyy-MM-dd
@@ -216,6 +228,10 @@ public class TimeUtils {
             e.printStackTrace();
         }
         return res;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(beforeDayByNowDay());
     }
 
 }

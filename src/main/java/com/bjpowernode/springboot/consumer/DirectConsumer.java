@@ -30,7 +30,7 @@ public class DirectConsumer {
 
         if (student.getAge() != 12) {
             System.out.println("消息重试！");
-            throw  new RuntimeException("查询到的结果为空！");
+            throw new RuntimeException("查询到的结果为空！");
         } else {
             System.out.println("直连队列收到消息--> " + student);
             channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);

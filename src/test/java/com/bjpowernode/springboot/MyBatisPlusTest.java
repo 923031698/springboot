@@ -29,7 +29,7 @@ import java.util.Map;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class MyTest {
+public class MyBatisPlusTest {
 
     @Autowired
     UsersMapper usersMapper;
