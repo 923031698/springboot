@@ -1,5 +1,6 @@
 package com.bjpowernode.springboot.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.bjpowernode.springboot.common.enums.ErrorTypeEnum;
 import com.bjpowernode.springboot.common.utils.ResponseUtils;
 import com.bjpowernode.springboot.handler.exception.CustomException;
@@ -65,13 +66,9 @@ public class UsersServiceImpl implements UsersService {
     /**
      * 新增
      */
-    public void add() {
-        Users user = new Users();
-        user.setPassword("123123");
-        user.setPhone("18667039325");
-        user.setEmail("923031698@qq.com");
-        user.setAccount("123123123");
-        usersMapper.insert(user);
+    public void add(Users users) {
+        users.setPhone("");
+        usersMapper.insert(users);
     }
 
     public void update() {
@@ -80,6 +77,7 @@ public class UsersServiceImpl implements UsersService {
 
     public Response select() {
         List<Users> users = usersMapper.selectList(null);
+        log.info(JSONObject.toJSONString(users));
         return ResponseUtils.success(users);
     }
 

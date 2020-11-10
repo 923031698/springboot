@@ -1,5 +1,6 @@
 package com.bjpowernode.springboot.model.domian.elasticsearch;
 
+import com.bjpowernode.springboot.common.enums.SexEnum;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
@@ -26,7 +27,7 @@ public class Student implements Serializable {
 
 
     @Field(type = FieldType.Integer)
-    private Integer sex;
+    private SexEnum sex;
 
     @Field(type = FieldType.Integer)
     private  Integer height;

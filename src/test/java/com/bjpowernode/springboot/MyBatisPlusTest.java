@@ -11,6 +11,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.conditions.update.LambdaUpdateChainWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.bjpowernode.springboot.common.enums.SexEnum;
 import com.bjpowernode.springboot.mapper.users.UsersMapper;
 import com.bjpowernode.springboot.model.domian.user.Users;
 import org.junit.Test;
@@ -40,7 +41,7 @@ public class MyBatisPlusTest {
      */
     @Test
     public void selectById() {
-        Users users = usersMapper.selectByUserId("1305391352889307138");
+        Users users = usersMapper.selectByUserId("1326052508125417473");
         System.out.println(users);
     }
 
@@ -89,6 +90,7 @@ public class MyBatisPlusTest {
         users.setPhone("18667039325");
         users.setName("柏金标");
         users.setAge(40);
+        users.setSex(SexEnum.WOMEN);
         usersMapper.insert(users);
     }
 
@@ -459,7 +461,7 @@ public class MyBatisPlusTest {
      */
     @Test
     public void selectByUserId() {
-        Users users = usersMapper.selectByUserId("5");
+        Users users = usersMapper.selectByUserId("1305398022210150402");
         System.out.println(users.toString());
     }
 

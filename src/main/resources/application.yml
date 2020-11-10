@@ -6,8 +6,5 @@ logging:
   level:
     com.bjpowernode.springboot.mapper: DEBUG
 
-mybatis-plus:
-  global-config:
-    db-config:
-      insert-strategy: not_empty
+
 

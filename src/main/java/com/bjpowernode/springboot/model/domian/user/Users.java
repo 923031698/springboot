@@ -1,11 +1,10 @@
 package com.bjpowernode.springboot.model.domian.user;
 
 
-import com.baomidou.mybatisplus.annotation.FieldStrategy;
-import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
+import com.bjpowernode.springboot.common.enums.SexEnum;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -29,7 +28,10 @@ public class Users extends Model<Users> {
 
     private Integer age;
 
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
+
+    private SexEnum sex;
 
 
 }

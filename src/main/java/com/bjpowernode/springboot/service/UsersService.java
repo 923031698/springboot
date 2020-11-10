@@ -1,6 +1,7 @@
 package com.bjpowernode.springboot.service;
 
 import com.bjpowernode.springboot.common.utils.Response;
+import com.bjpowernode.springboot.model.domian.user.Users;
 
 public interface UsersService {
 
@@ -10,7 +11,7 @@ public interface UsersService {
 
     void show();
 
-    void add();
+    void add(Users users);
 
     void update();
 
