@@ -21,6 +21,13 @@ public class SwaggerController {
     @Autowired
     UsersService usersService;
 
+    /**
+     * https://www.jianshu.com/p/f30e0c646c63  swagger 简书教程
+     *
+     * @param id     用户id
+     * @param status 用户状态
+     * @return Users  用户返回信息
+     */
     @ApiOperation(value = "根据用户id查询用户信息")
     @GetMapping(value = "/swagger/{id}/{status}")
     public Users getUserInfo(@PathVariable("id") Integer id, @PathVariable("status") Integer status) {
