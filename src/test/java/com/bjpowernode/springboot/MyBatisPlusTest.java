@@ -11,7 +11,6 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.conditions.update.LambdaUpdateChainWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.bjpowernode.springboot.common.enums.SexEnum;
 import com.bjpowernode.springboot.mapper.users.UsersMapper;
 import com.bjpowernode.springboot.model.domian.user.Users;
 import org.junit.Test;
@@ -90,7 +89,7 @@ public class MyBatisPlusTest {
         users.setPhone("18667039325");
         users.setName("柏金标");
         users.setAge(40);
-        users.setSex(SexEnum.WOMEN);
+        //  users.setSex(SexEnum.WOMEN);
         usersMapper.insert(users);
     }
 

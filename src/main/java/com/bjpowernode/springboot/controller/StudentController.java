@@ -1,11 +1,14 @@
 package com.bjpowernode.springboot.controller;
 
-import com.bjpowernode.springboot.common.utils.ResponseUtils;
 import com.bjpowernode.springboot.common.utils.Response;
+import com.bjpowernode.springboot.common.utils.ResponseUtils;
 import com.bjpowernode.springboot.model.domian.elasticsearch.Student;
 import com.bjpowernode.springboot.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -27,27 +30,30 @@ public class StudentController {
 
 
     @PostMapping(value = "/student/delete")
-    public   Response delete(Student student){
+    public Response delete(Student student) {
         studentService.delete(student);
         return ResponseUtils.success();
     }
+
     @PostMapping(value = "/student/save")
-    public  Response save(Student student){
+    public Response save(Student student) {
         studentService.save(student);
         return ResponseUtils.success();
     }
+
     @PostMapping(value = "/student/saveAll")
-    public  Response saveAll(@RequestBody List<Student> list){
+    public Response saveAll(@RequestBody List<Student> list) {
         studentService.saveAll(list);
         return ResponseUtils.success();
     }
+
     @GetMapping(value = "/student/findById")
-    public  Response findById(String id){
+    public Response findById(String id) {
         return ResponseUtils.success(studentService.findById(id));
     }
 
     @GetMapping(value = "/student/findAll")
-    public   Response findAll( ){
+    public Response findAll() {
         return ResponseUtils.success(studentService.findAll());
     }
 
