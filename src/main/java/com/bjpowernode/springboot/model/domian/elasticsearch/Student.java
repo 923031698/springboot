@@ -12,11 +12,11 @@ import java.io.Serializable;
 /**
  * @Author: bjb
  * @Date: 2020-06-27 13:49:25
- * @Company: 乐木几网络科技有限公司
  */
 @Document(indexName = "student", type = "_doc")
 @Data
 public class Student implements Serializable {
+    private static final long serialVersionUID = 4686966784374450348L;
     @Id
     private String id;
     @Field(type = FieldType.Text)
@@ -30,6 +30,6 @@ public class Student implements Serializable {
     private SexEnum sex;
 
     @Field(type = FieldType.Integer)
-    private  Integer height;
+    private Integer height;
 
 }

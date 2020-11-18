@@ -15,11 +15,11 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
  * @author xb
+ * * @Description: 集成swagger
  */
 @EnableSwagger2
 @Configuration
 public class SwaggerConfig {
-
 
     /**
      * 在spring容器配置一个bean对象

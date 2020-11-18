@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 /**
- * @author Administrator
+ * @author xb
  */
 @Data
 public class Orders implements Serializable {

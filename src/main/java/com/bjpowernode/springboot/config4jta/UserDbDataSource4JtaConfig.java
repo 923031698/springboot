@@ -22,12 +22,12 @@ import javax.sql.DataSource;
 
 /**
  * @Author: xb
+ * @Description: 该数据源集成mybatis-plus (注意 mybatis-plus和mybatis不能同时存在 jar只能2选其一)
  * @Date: 2020/9/14 12:08
  */
 @Configuration
 @MapperScan(basePackages = {"com.bjpowernode.springboot.mapper.users"}, sqlSessionFactoryRef = "userdbSqlSessionFactory")
 public class UserDbDataSource4JtaConfig {
-
 
     @Autowired
     MybatisPlusInterceptor mybatisPlusInterceptor;

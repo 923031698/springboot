@@ -12,7 +12,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 /**
- * @author Administrator
+ * @author xb
  */
 @ApiModel(description = "用户实体类")
 @Data
