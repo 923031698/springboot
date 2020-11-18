@@ -2,10 +2,10 @@ package com.bjpowernode.springboot.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.bjpowernode.springboot.common.enums.ErrorTypeEnum;
+import com.bjpowernode.springboot.common.utils.Response;
 import com.bjpowernode.springboot.common.utils.ResponseUtils;
 import com.bjpowernode.springboot.handler.exception.CustomException;
 import com.bjpowernode.springboot.mapper.users.UsersMapper;
-import com.bjpowernode.springboot.common.utils.Response;
 import com.bjpowernode.springboot.model.domian.user.Users;
 import com.bjpowernode.springboot.service.RedisService;
 import com.bjpowernode.springboot.service.UsersService;
@@ -33,6 +33,7 @@ public class UsersServiceImpl implements UsersService {
     @Autowired
     private RedisService redisService;
 
+    @Override
     public Response register(String phone, String password) {
         Users users = new Users();
         users.setPhone(phone);
@@ -44,6 +45,7 @@ public class UsersServiceImpl implements UsersService {
         return ResponseUtils.success();
     }
 
+    @Override
     public Response login(String phone, String password) {
       /*  Users users1 = new Users();
         users1.setPhone(phone);
@@ -55,6 +57,7 @@ public class UsersServiceImpl implements UsersService {
         return ResponseUtils.success();
     }
 
+    @Override
     public void show() {
 
         System.out.println("222.............");
@@ -66,15 +69,18 @@ public class UsersServiceImpl implements UsersService {
     /**
      * 新增
      */
+    @Override
     public void add(Users users) {
         users.setPhone("");
         usersMapper.insert(users);
     }
 
+    @Override
     public void update() {
 
     }
 
+    @Override
     public Response select() {
         List<Users> users = usersMapper.selectList(null);
         log.info(JSONObject.toJSONString(users));

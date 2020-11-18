@@ -11,7 +11,7 @@ import lombok.Getter;
  * @Date 2020/5/20 20:48
  */
 @Getter
-//可以将枚举转化成JSON返回给前端
+//可以将枚举转化成JSON返回给前端（下面注解的作用）
 //@JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum SexEnum implements IEnum<Integer> {
     /**

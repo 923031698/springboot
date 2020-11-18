@@ -26,6 +26,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author xb
+ * @Description: mybatis-plus 用法测试类
+ */
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
