@@ -8,7 +8,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 //@Configuration
 public class MvcConfig implements WebMvcConfigurer {
-
     /*@Override
     public void addInterceptors(InterceptorRegistry registry) {
         //对来自 /api/** 链接的请求进行拦截，对登录请求/api/login不进行拦截

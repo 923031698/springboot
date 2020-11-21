@@ -79,8 +79,9 @@ public class UsersServiceImpl implements UsersService {
     }
 
     public Response select() {
-        List<Users> users = usersMapper.selectList(null);
-        return ResponseUtils.success(users);
+        System.out.println("123213");
+   //     List<Users> users = usersMapper.selectList(null);
+        return ResponseUtils.success();
     }
 
 
