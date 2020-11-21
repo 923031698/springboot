@@ -1,11 +1,11 @@
 package com.bjpowernode.springboot.service.impl;
 
+import com.bjpowernode.springboot.common.utils.Response;
 import com.bjpowernode.springboot.common.utils.ResponseUtils;
 import com.bjpowernode.springboot.mapper.goods.GoodsMapper;
 import com.bjpowernode.springboot.mapper.orders.OrdersMapper;
 import com.bjpowernode.springboot.model.domian.good.Goods;
 import com.bjpowernode.springboot.model.domian.order.Orders;
-import com.bjpowernode.springboot.common.utils.Response;
 import com.bjpowernode.springboot.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,11 +23,13 @@ public class GoodsServiceImpl implements GoodsService {
     @Autowired
     private OrdersMapper ordersMapper;
 
+    @Override
     public List<Goods> getAllGoods() {
         //return goodsMapper.selectAll();
         return null;
     }
 
+    @Override
     public Goods getGoodsById(Integer goodsId) {
         return null;
     }
@@ -40,6 +42,7 @@ public class GoodsServiceImpl implements GoodsService {
      * @param buyNum
      * @return
      */
+    @Override
     @Transactional
     public Response doOrder(Integer uid, Integer goodsId, Integer buyNum) {
         //减库存 (操作商品库)

@@ -2,6 +2,7 @@ package com.bjpowernode.springboot.controller;
 
 import com.bjpowernode.springboot.common.utils.Response;
 import com.bjpowernode.springboot.common.utils.ResponseUtils;
+import com.bjpowernode.springboot.model.domian.user.Users;
 import com.bjpowernode.springboot.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -57,8 +58,8 @@ public class UsersController {
     }
 
     @RequestMapping("/boot/add")
-    public Response add() {
-        usersService.add();
+    public Response add(Users users) {
+        usersService.add(users);
         return ResponseUtils.success();
     }
 
@@ -67,6 +68,7 @@ public class UsersController {
         usersService.update();
         return ResponseUtils.success();
     }
+
 
     @RequestMapping("/boot/select")
     public Response select() {

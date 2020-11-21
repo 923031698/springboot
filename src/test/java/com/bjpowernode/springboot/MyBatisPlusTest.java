@@ -4,8 +4,12 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
+import com.baomidou.mybatisplus.extension.conditions.update.LambdaUpdateChainWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.bjpowernode.springboot.mapper.users.UsersMapper;
 import com.bjpowernode.springboot.model.domian.user.Users;
@@ -22,10 +26,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author xb
+ * @Description: mybatis-plus 用法测试类
+ */
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class MyTest {
+public class MyBatisPlusTest {
 
     @Autowired
     UsersMapper usersMapper;
@@ -36,7 +44,7 @@ public class MyTest {
      */
     @Test
     public void selectById() {
-        Users users = usersMapper.selectById("1301343945864032258");
+        Users users = usersMapper.selectByUserId("1326052508125417473");
         System.out.println(users);
     }
 
@@ -81,10 +89,11 @@ public class MyTest {
         users.setAccount("柏金标账号");
         users.setEmail("923031698@qq.com");
         users.setPassword("123");
-        users.setNick("哈哈");
+        users.setNick("");
         users.setPhone("18667039325");
         users.setName("柏金标");
         users.setAge(40);
+        //  users.setSex(SexEnum.WOMEN);
         usersMapper.insert(users);
     }
 
@@ -95,12 +104,74 @@ public class MyTest {
     @Test
     public void update() {
         Users users = new Users();
-        users.setId("1301343945864032258");
+        // users.setId("1301343945864032258");
         users.setName("柏金标");
         users.setNick(null);
         users.setNick("");
         users.setCreateTime(LocalDateTime.now());
         usersMapper.updateById(users);
+    }
+
+    /**
+     * 使用updateWrapper条件用法
+     */
+    @Test
+    public void updateWrapper() {
+        UpdateWrapper updateWrapper = new UpdateWrapper<Users>();
+        updateWrapper.eq("id", "1301343614660886530");
+        Users users = new Users();
+        users.setName("柏金标");
+        users.setCreateTime(LocalDateTime.now());
+        int rows = usersMapper.update(users, updateWrapper);
+        System.out.println("修改记录数：" + rows);
+    }
+
+    /**
+     * 使用LambdaUpdateWrapper条件用法
+     */
+    @Test
+    public void lambdaUpdateWrapper1() {
+        // LambdaUpdateWrapper lambdaUpdateWrapper = new UpdateWrapper<Users>().lambda();
+        // LambdaUpdateWrapper lambdaUpdateWrapper = new LambdaUpdateWrapper<Users>();
+        LambdaUpdateWrapper<Users> lam = Wrappers.lambdaUpdate();
+        // new LambdaUpdateWrapper<Users>().eq(Users::getId, "1301343614660886530");
+        lam.eq(Users::getId, "1301343614660886530");
+        Users users = new Users();
+        users.setName("柏金标");
+        users.setCreateTime(LocalDateTime.now());
+        int rows = usersMapper.update(users, lam);
+        System.out.println("修改记录数：" + rows);
+    }
+
+
+    /**
+     * 使用LambdaUpdateWrapper2条件用法
+     */
+    @Test
+    public void lambdaUpdateWrapper2() {
+        LambdaUpdateWrapper lambdaUpdateWrapper = new UpdateWrapper<Users>().lambda();
+        // LambdaUpdateWrapper lambdaUpdateWrapper = new LambdaUpdateWrapper<Users>();
+        LambdaUpdateWrapper<Users> lam = Wrappers.lambdaUpdate();
+        // new LambdaUpdateWrapper<Users>().eq(Users::getId, "1301343614660886530");
+        lam.eq(Users::getId, "1301343614660886530").set(Users::getName, "张雄威");
+        // new UpdateWrapper<Users>().lambda().eq(Users::getId, "1301343614660886530").set(Users::getName, "张雄威");
+        //  new LambdaUpdateWrapper<Users>().eq(Users::getId, "1301343614660886530").set(Users::getName, "张雄威");
+//        Users users = new Users();
+//        users.setName("柏金标");
+//        users.setCreateTime(LocalDateTime.now());
+        int rows = usersMapper.update(null, lam);
+        System.out.println("修改记录数：" + rows);
+    }
+
+    /**
+     * 使用LambdaUpdateWrapper3条件用法
+     */
+    @Test
+    public void lambdaUpdateWrapper3() {
+        boolean rows = new LambdaUpdateChainWrapper<Users>(usersMapper)
+                .eq(Users::getId, "1301343614660886530")
+                .set(Users::getName, "张雄威").update();
+        System.out.println("修改记录数：" + rows);
     }
 
 
@@ -373,7 +444,7 @@ public class MyTest {
         LambdaQueryWrapper<Users> lambda = new QueryWrapper<Users>().lambda();
         //LambdaQueryWrapper<Users> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         //LambdaQueryWrapper<Users> lam = Wrappers.<Users>lambdaQuery();
-        lambda.like(Users::getName, "雨").lt(Users::getAge, 40);
+        new LambdaQueryWrapper<Users>().like(Users::getName, "雨").lt(Users::getAge, 40);
         List<Users> users = usersMapper.selectList(lambda);
         System.out.println(users.toString());
     }
@@ -393,7 +464,7 @@ public class MyTest {
      */
     @Test
     public void selectByUserId() {
-        Users users = usersMapper.selectByUserId("5");
+        Users users = usersMapper.selectByUserId("1305398022210150402");
         System.out.println(users.toString());
     }
 
@@ -402,10 +473,31 @@ public class MyTest {
      */
     @Test
     public void selectPage() {
-        IPage<Users> page = usersMapper.selectPage(new Page<>(1, 2),new LambdaQueryWrapper<Users>().like(Users::getPhone, "18667039325"));
+        IPage<Users> page = usersMapper.selectPage(new Page<>(1, 2), new LambdaQueryWrapper<Users>().like(Users::getPhone, "18667039325"));
         System.out.println("总页数:" + page.getPages());
         System.out.println("总记录数:" + page.getTotal());
         List<Users> list = page.getRecords();
         list.forEach(System.out::println);
     }
+
+    /**
+     * 简单删除
+     */
+    @Test
+    public void deleteById() {
+        int rows = usersMapper.deleteById("1301352545244246017");
+        System.out.println("删除条数：" + rows);
+    }
+
+    /**
+     * 简单删除
+     */
+    @Test
+    public void deleteByMap() {
+        Map map = new HashMap();
+        map.put("name", "张雄威");
+        int rows = usersMapper.deleteByMap(map);
+        System.out.println("删除条数：" + rows);
+    }
+
 }

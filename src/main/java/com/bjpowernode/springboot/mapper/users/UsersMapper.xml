@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bjpowernode.springboot.mapper.users.UsersMapper">
-    <select id="selectByUserId" resultType="com.bjpowernode.springboot.model.domian.user.Users">
+    <select id="selectByUserId" resultType="Users">
         select *
         from users
         where id = #{userId}

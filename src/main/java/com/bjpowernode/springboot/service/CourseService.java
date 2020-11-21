@@ -5,5 +5,5 @@ import com.bjpowernode.springboot.model.domian.elasticsearch.Course;
 
 public interface CourseService {
 
-     Response insert(Course course);
+    Response insert(Course course);
 }

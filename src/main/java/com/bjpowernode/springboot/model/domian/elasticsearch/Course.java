@@ -12,11 +12,11 @@ import java.io.Serializable;
  * @Author: bjb
  * @Description: 课程表检索
  * @Date: 2020-06-21 22:06:33
- * @Company: 乐木几网络科技有限公司
  */
 @Document(indexName = "course", type = "_doc")
 @Data
 public class Course implements Serializable {
+    private static final long serialVersionUID = -1772757386009565006L;
     @Id
     private String id;
 

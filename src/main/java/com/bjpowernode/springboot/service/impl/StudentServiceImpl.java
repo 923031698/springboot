@@ -25,8 +25,9 @@ public class StudentServiceImpl implements StudentService {
      * @Description 新增索引
      * @Date 2020/6/27 15:12
      */
+    @Override
     public void index(Student student) {
-     //   studentRepository.index(Student.builder().build());
+        //   studentRepository.index(Student.builder().build());
     }
 
 
@@ -35,6 +36,7 @@ public class StudentServiceImpl implements StudentService {
      * @Description 删除
      * @Date 2020/6/27 15:12
      */
+    @Override
     public void delete(Student student) {
         studentRepository.delete(student);
     }
@@ -45,6 +47,7 @@ public class StudentServiceImpl implements StudentService {
      * @Description 添加 /修改
      * @Date 2020/6/27 15:12
      */
+    @Override
     public void save(Student student) {
         studentRepository.save(student);
     }
@@ -55,6 +58,7 @@ public class StudentServiceImpl implements StudentService {
      * @Description 添加 /修改 (批量)
      * @Date 2020/6/27 15:12
      */
+    @Override
     public void saveAll(List<Student> list) {
         for (Student student : list) {
             student.setId(IdUtil.objectId());
@@ -67,6 +71,7 @@ public class StudentServiceImpl implements StudentService {
      * @Description 根据id查询
      * @Date 2020/6/27 15:12
      */
+    @Override
     public Student findById(String id) {
         Optional<Student> student = studentRepository.findById(id);
         return student.get();
@@ -78,7 +83,8 @@ public class StudentServiceImpl implements StudentService {
      * @Description 查询所有
      * @Date 2020/6/27 15:12
      */
-    public Iterable<Student> findAll( ) {
+    @Override
+    public Iterable<Student> findAll() {
         System.out.println("12312312321");
 
         //查询所有
@@ -86,7 +92,7 @@ public class StudentServiceImpl implements StudentService {
 //        Iterable<Student> ageList = studentRepository.findAll(Sort.by(Sort.Order.desc("age")));
 //        Page<Student> pageList = studentRepository.findAll(PageRequest.of(0, 10));
 //        List<String> idList = new ArrayList<>();
-       // Iterable<Student> allById = studentRepository.findAllById(idList);
+        // Iterable<Student> allById = studentRepository.findAllById(idList);
         return list;
     }
 
