@@ -14,9 +14,9 @@ spring:
       # 启用
       enabled: true
       # 上传文件单个限制
-      max-file-size: 5MB
+      max-file-size: 512MB
       # 总限制
-      max-request-size: 6MB
+      max-request-size: 1024MB
   datasource:
     userdb:
       username: root
