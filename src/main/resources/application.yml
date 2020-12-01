@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: dev
+    active: 01dev
 
 logging:
   level:
