@@ -1,10 +1,10 @@
 package com.bjpowernode.springboot.service.impl;
 
 import com.bjpowernode.springboot.common.enums.ErrorTypeEnum;
+import com.bjpowernode.springboot.common.utils.Response;
 import com.bjpowernode.springboot.common.utils.ResponseUtils;
 import com.bjpowernode.springboot.handler.exception.CustomException;
 import com.bjpowernode.springboot.mapper.users.UsersMapper;
-import com.bjpowernode.springboot.common.utils.Response;
 import com.bjpowernode.springboot.model.domian.user.Users;
 import com.bjpowernode.springboot.service.RedisService;
 import com.bjpowernode.springboot.service.UsersService;
@@ -60,6 +60,11 @@ public class UsersServiceImpl implements UsersService {
         redisTemplate.opsForValue().set("abc", "abcdefg");
 
         System.out.println("userservice show方法执行了.............");
+    }
+
+    @Override
+    public void add(Users users) {
+        
     }
 
     /**
